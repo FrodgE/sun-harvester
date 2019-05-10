@@ -8,7 +8,8 @@ Note that there is quite a bit of information scattered around this site. The pr
 
 While reading through the topics on this page, you will no doubt notice that the information is largely biased towards heliostats. This is because my own personal interest is in heliostats, not sun trackers. Of course, heliostats and sun trackers are similar enough in their design that by developing a heliostat control system I also had a sun tracking system too. So if your own interest is to build a sun tracker, you should find that much of this information is still quite relevant.
 
-# Arduino Sun Tracking / Heliostat Program
+## Arduino Sun Tracking / Heliostat Program
+
 The Arduino Sun Tracking / Heliostat Program is a program for the Arduino that is able to control multiple types of sun tracking machines and heliostats. It is able to control not just one machine but several, each with its own set of design parameters. It has a myriad of other features as well such as manual control, stepper motor acceleration, and wind protection mode just to start.
 
 To download and learn more about this program, please visit the following links.
