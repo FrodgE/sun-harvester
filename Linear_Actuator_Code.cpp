@@ -1,3 +1,12 @@
+#include "globals.h"
+#include "Linear_Actuator_Code.h"
+#include "Functions.h"
+
+#include <Arduino.h>
+
+
+float leadscrewLength(float b,float c,float AcuteObtuse,float angle, float AngleAtZero);
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //This code calculates the length of the linear actuator.
 float leadscrewLength(float b,float c,float AcuteObtuse,float angle, float AngleAtZero){

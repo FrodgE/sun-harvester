@@ -1,3 +1,26 @@
+#include "globals.h"
+#include "SunCalculations.h"
+#include <BigNumber.h>
+#include <BigNumberMath.h>
+
+
+BigNumber findjd(int year, int month, int day, int timezone, int hour, int minute, int second);
+BigNumber TimeInJulianCenturies(BigNumber jd);
+BigNumber MeanEquinoxOfTheDate(BigNumber t);
+BigNumber MeanAnomalyOfTheSun(BigNumber t);
+BigNumber SunsEquationOfTheCenter(BigNumber m, BigNumber t);
+BigNumber SunsApparantLongitude(BigNumber t, BigNumber o);
+BigNumber ObliquityOfTheEcliptic(BigNumber t);
+BigNumber SunsDeclination(BigNumber epsilon, BigNumber lambda);
+BigNumber SunsRightAscension(BigNumber epsilon, BigNumber lambda);
+BigNumber SiderealTime(BigNumber t, BigNumber jd);
+BigNumber LocalHourAngle(BigNumber theta, BigNumber alpha, float longitude);
+void findAlt(float latitude, BigNumber delta, BigNumber h);
+void findAz(float latitude, BigNumber delta, BigNumber h);
+BigNumber findAzSubFunction(BigNumber latitude, BigNumber delta, BigNumber h);
+boolean region(BigNumber z);
+float bigNumberToFloat(BigNumber number);
+void printBignum (BigNumber & n);
 
 void findSunsAltAndAzOne(int year, int month, int day, int timezone, int hour, int minute, int second, float latitude, float longitude){
       

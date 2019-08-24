@@ -1,3 +1,9 @@
+#include "globals.h"
+#include "TargetControl.h"
+#include "Functions.h"
+
+#include <Arduino.h>
+
 
 void TargetControl(int second, int minute, int hour, int day, int month, int year, int dayOfWeek){
   

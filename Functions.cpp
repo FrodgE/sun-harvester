@@ -1,3 +1,21 @@
+#include "globals.h"
+#include "Functions.h"
+#include "Joystick_Control_Code.h"
+
+#include <EEPROM.h>
+#include <Wire.h>
+#include <Arduino.h>
+
+
+void moveMotorWithAccel(long numOfSteps,int stepPin, int DirPin, float maxspeed,float Accel);
+void searchForLimit(float limitAngle, int DirPin, int stepPin, int ResetSpeed, int LimitPin, long maxResetSteps, int motorDirection);
+float to_rad(float angle);
+float to_deg(float angle);
+float getFloatFromSerialMonitor();
+void turnMCP23017PinOn(int MachineNumber);
+void turnMCP23017PinOff();
+byte machineToByte(int MachineNumber);
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //This code moves the stepper motors
 void moveToPosition(int AccelYesOrNo, long altsteps, long azsteps){
@@ -142,7 +160,7 @@ return angle*(180/pi);
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //This function returns a float number typed into the serial monitor
   float getFloatFromSerialMonitor(){
-  //char inData[20];
+  char inData[20];
   float f=0;    
   int x=0;  
   while (x<1){  

@@ -6,10 +6,15 @@
 //  Notes   : Code for controlling various types of solar       
 //          : machines.                                         
 //****************************************************************
-  #include "Wire.h"  
-  #include <EEPROM.h>
-  #include <BigNumber.h>
-  #include <BigNumberMath.h>
+#include "globals.h"
+#include "Joystick_Control_Code.h"
+#include "Functions.h"
+#include "Libraries.h"
+#include "MoveMachine.h"
+#include "SunCalculations.h"
+#include "TargetControl.h"
+
+  #include <Wire.h>  
   
 
 //PUT YOUR LATITUDE, LONGITUDE, AND TIME ZONE HERE
@@ -109,9 +114,6 @@
     int plusOneButton = 11;
     int minusOneButton = 12;
 
-   
-    //Put how many machines you want to control here
-    #define numberOfMachines 1
     
     //Open the "ReadMe" file that was downloaded with this program to see what each of these settings do.
     const float MachineSettings[][20] PROGMEM = { 
@@ -171,7 +173,6 @@
   unsigned long updateTime = 0,  now = 0; 
   float altManualSpeedSwap, azManualSpeedSwap, altMove, azMove, UDCenter, LRCenter;
   int joystickModeOnOff, joystickTriggerOnce, manualMachineNumber;
-  #define DS1307_I2C_ADDRESS 0x68
   
 /////////////////////////////////////////////////////////// 
 //END MISC. VARIABLES
@@ -192,8 +193,6 @@
    
   //float MachineAlt[numberOfMachines];
   //float MachineAz[numberOfMachines];
-  
-  char inData[20];
 ///////////////////////////////////////////////////////////  
 //END MISC. ARRAYS  
 ///////////////////////////////////////////////////////////  

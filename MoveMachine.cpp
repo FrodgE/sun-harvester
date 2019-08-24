@@ -1,3 +1,16 @@
+#include "globals.h"
+#include "MoveMachine.h"
+#include "Linear_Actuator_Code.h"
+#include "Functions.h"
+
+#include <Arduino.h>
+
+
+long GearRatioMoveMotor(int altOrAz, float MachinesPreviousAngle, float MachinesNewAngle, float GearRatio, float MotorDirection);
+void resetPositionOfMachine(float altMotorDirection, float altLimitAngle, float altGearRatio, float altb, float altc, int altAcuteObtuse, float altAngleAtZero,
+                            float azMotorDirection,  float azLimitAngle,  float azGearRatio,  float azb,  float azc,  int azAcuteObtuse, float azAngleAtZero);
+void gearReductionReset(int altOrAz, float MotorDirection, float LimitAngle, float GearRatio);
+
 void moveMachine(float preTargetAlt, float preTargetAz, float targetalt, float targetaz, int sunTrackerOrHelio, 
 float altGearRatio, float altMotorDirection, float altb, float altc, float altAngleAtZero, int altAcuteObtuse, float altLimitAngle, 
 float azGearRatio,  float azMotorDirection,  float azb,  float azc,  float azAngleAtZero,  int azAcuteObtuse, float azLimitAngle, 

@@ -1,3 +1,12 @@
+#include "globals.h"
+#include "Joystick_Control_Code.h"
+#include "Functions.h"
+
+#include <Arduino.h>
+
+
+void ManualControlThroughJoystick();
+
 void checkJoystick(){
   if(digitalRead(plusOneButton) == HIGH && digitalRead(minusOneButton) == HIGH && joystickModeOnOff == 0 && joystickTriggerOnce == 0){
     joystickModeOnOff=1;
