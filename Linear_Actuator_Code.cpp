@@ -4,17 +4,17 @@
 
 #include <Arduino.h>
 
-float leadscrewLength(float b, float c, float AcuteObtuse, float angle, float AngleAtZero);
+float leadscrewLength(float b, float c, linearAngle_t AcuteObtuse, float angle, float AngleAtZero);
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //This code calculates the length of the linear actuator.
-float leadscrewLength(float b, float c, float AcuteObtuse, float angle, float AngleAtZero)
+float leadscrewLength(float b, float c, linearAngle_t AcuteObtuse, float angle, float AngleAtZero)
 {
     float output;
-    if (AcuteObtuse == 1) {
+    if (AcuteObtuse == ACUTE) {
         angle = AngleAtZero - angle;
     }
-    if (AcuteObtuse == 2) {
+    if (AcuteObtuse == OBTUSE) {
         angle = AngleAtZero + angle;
     }
     output = sqrt(b * b + c * c - 2 * b * c * cos((angle)*pi / 180));
@@ -22,7 +22,7 @@ float leadscrewLength(float b, float c, float AcuteObtuse, float angle, float An
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-long linearActuatorMoveMotor(int altOrAz, float MachinesPreviousAngle, float MachinesNewAngle, float GearRatio, float MotorDirection, float b, float c, int AcuteObtuse, float AngleAtZero)
+long linearActuatorMoveMotor(int altOrAz, float MachinesPreviousAngle, float MachinesNewAngle, float GearRatio, float MotorDirection, float b, float c, linearAngle_t AcuteObtuse, float AngleAtZero)
 {
     float NewLength = leadscrewLength(b, c, AcuteObtuse, MachinesNewAngle, AngleAtZero); //New Leadscrew Length
     float PreviousLength = leadscrewLength(b, c, AcuteObtuse, MachinesPreviousAngle, AngleAtZero); //Previous Leadscrew Length
@@ -51,10 +51,10 @@ long linearActuatorMoveMotor(int altOrAz, float MachinesPreviousAngle, float Mac
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-void linearActuatorReset(int altOrAz, float MotorDirection, float LimitAngle, float GearRatio, float b, float c, float AcuteObtuse, float AngleAtZero)
+void linearActuatorReset(int altOrAz, float MotorDirection, float LimitAngle, float GearRatio, float b, float c, linearAngle_t AcuteObtuse, float AngleAtZero)
 {
     int dirMod = 1;
-    if (AcuteObtuse == 2) {
+    if (AcuteObtuse == OBTUSE) {
         dirMod = -1;
     }
     findLimits(altOrAz, MotorDirection * dirMod, LimitAngle); //Seeks out limit switch

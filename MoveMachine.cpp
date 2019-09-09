@@ -6,13 +6,13 @@
 #include <Arduino.h>
 
 long GearRatioMoveMotor(int altOrAz, float MachinesPreviousAngle, float MachinesNewAngle, float GearRatio, float MotorDirection);
-void resetPositionOfMachine(float altMotorDirection, float altLimitAngle, float altGearRatio, float altb, float altc, int altAcuteObtuse, float altAngleAtZero, float azMotorDirection, float azLimitAngle, float azGearRatio, float azb, float azc, int azAcuteObtuse, float azAngleAtZero);
+void resetPositionOfMachine(float altMotorDirection, float altLimitAngle, float altGearRatio, float altb, float altc, linearAngle_t altAcuteObtuse, float altAngleAtZero, float azMotorDirection, float azLimitAngle, float azGearRatio, float azb, float azc, linearAngle_t azAcuteObtuse, float azAngleAtZero);
 void gearReductionReset(int altOrAz, float MotorDirection, float LimitAngle, float GearRatio);
 
-void moveMachine(float preTargetAlt, float preTargetAz, float targetalt, float targetaz, int sunTrackerOrHelio, float altGearRatio, float altMotorDirection, float altb, float altc, float altAngleAtZero, int altAcuteObtuse, float altLimitAngle, float azGearRatio, float azMotorDirection, float azb, float azc, float azAngleAtZero, int azAcuteObtuse, float azLimitAngle, float minAz, float minAlt, float maxAz, float maxAlt)
+void moveMachine(float preTargetAlt, float preTargetAz, float targetalt, float targetaz, machineType_t sunTrackerOrHelio, float altGearRatio, float altMotorDirection, float altb, float altc, float altAngleAtZero, linearAngle_t altAcuteObtuse, float altLimitAngle, float azGearRatio, float azMotorDirection, float azb, float azc, float azAngleAtZero, linearAngle_t azAcuteObtuse, float azLimitAngle, float minAz, float minAlt, float maxAz, float maxAlt)
 {
     if (digitalRead(HeliostatToSun) == HIGH) {
-        sunTrackerOrHelio = 1;
+        sunTrackerOrHelio = SUN_TRACKER;
     }
 
     if ((iterationsAfterReset == 0) || (FirstIterationAfterArduinoReset == 0)) { //Machine Resets Position
@@ -35,12 +35,12 @@ void moveMachine(float preTargetAlt, float preTargetAz, float targetalt, float t
 
     if (SunsAltitude >= 0 || digitalRead(WindProtectionSwitch) == HIGH || digitalRead(manualModeOnOffPin) == HIGH) { //Waits until the sun is above the horizon before moving normally.
         //This code will also run if either manual mode or wind protection mode is activated.
-        if (sunTrackerOrHelio == 1) { //Machine Acts as Dual Axis Sun Tracker
+        if (sunTrackerOrHelio == SUN_TRACKER) { //Machine Acts as Dual Axis Sun Tracker
             MachinesNewAltitude = SunsAltitude;
             MachinesNewAzimuth = SunsAzimuth;
         }
 
-        if (sunTrackerOrHelio == 2) { //Machine Acts as Heliostat
+        if (sunTrackerOrHelio == HELIOSTAT) { //Machine Acts as Heliostat
             FindHeliostatAltAndAz(SunsAltitude, SunsAzimuth, targetalt, targetaz, MachinesNewAltitude, MachinesNewAzimuth);
             if (joystickModeOnOff != 1) {
                 if (FirstIterationAfterArduinoReset != 0) {
@@ -74,25 +74,25 @@ void moveMachine(float preTargetAlt, float preTargetAz, float targetalt, float t
             if (iterationsAfterReset > 0) { //This code does not run directly after machine resets.
 
                 //Machine uses Gear Reduction System for both AZIMUTH and ALTITUDE
-                if (float(pgm_read_float(&MachineSettings[machineNumber][0])) == 0) {
+                if (float(pgm_read_float(&MachineSettings[machineNumber][0])) == ALT_GEAR_AZI_GEAR) {
                     azsteps = GearRatioMoveMotor(2, MachinesPreviousAzimuth, MachinesNewAzimuth, azGearRatio, azMotorDirection);
                     altsteps = GearRatioMoveMotor(1, MachinesPreviousAltitude, MachinesNewAltitude, altGearRatio, altMotorDirection);
                 }
 
                 //Machine uses Linear Actuator for both AZIMUTH and ALTITUDE
-                if (float(pgm_read_float(&MachineSettings[machineNumber][0])) == 1) {
+                if (float(pgm_read_float(&MachineSettings[machineNumber][0])) == ALT_LINEAR_AZI_LINEAR) {
                     azsteps = linearActuatorMoveMotor(2, MachinesPreviousAzimuth, MachinesNewAzimuth, azGearRatio, azMotorDirection, azb, azc, azAcuteObtuse, azAngleAtZero);
                     altsteps = linearActuatorMoveMotor(1, MachinesPreviousAltitude, MachinesNewAltitude, altGearRatio, altMotorDirection, altb, altc, altAcuteObtuse, altAngleAtZero);
                 }
 
                 //Machine uses Linear Actuator for ALTITUDE and Gear Reduction System for AZIMUTH
-                if (float(pgm_read_float(&MachineSettings[machineNumber][0])) == 2) {
+                if (float(pgm_read_float(&MachineSettings[machineNumber][0])) == ALT_LINEAR_AZI_GEAR) {
                     azsteps = GearRatioMoveMotor(2, MachinesPreviousAzimuth, MachinesNewAzimuth, azGearRatio, azMotorDirection);
                     altsteps = linearActuatorMoveMotor(1, MachinesPreviousAltitude, MachinesNewAltitude, altGearRatio, altMotorDirection, altb, altc, altAcuteObtuse, altAngleAtZero);
                 }
 
                 //Machine uses Linear Actuator for AZIMUTH and Gear Reduction System for ALTITUDE
-                if (float(pgm_read_float(&MachineSettings[machineNumber][0])) == 3) {
+                if (float(pgm_read_float(&MachineSettings[machineNumber][0])) == ALT_GEAR_AZI_LINEAR) {
                     azsteps = linearActuatorMoveMotor(2, MachinesPreviousAzimuth, MachinesNewAzimuth, azGearRatio, azMotorDirection, azb, azc, azAcuteObtuse, azAngleAtZero);
                     altsteps = GearRatioMoveMotor(1, MachinesPreviousAltitude, MachinesNewAltitude, altGearRatio, altMotorDirection);
                 }
@@ -111,12 +111,12 @@ void moveMachine(float preTargetAlt, float preTargetAz, float targetalt, float t
         } else {
             Serial.println("Move exceeds bounds");
             if (joystickModeOnOff == 1) {
-                if (HeliostatToSun == HIGH || float(pgm_read_float(&MachineSettings[machineNumber][1])) == 1) {
+                if (HeliostatToSun == HIGH || float(pgm_read_float(&MachineSettings[machineNumber][1])) == SUN_TRACKER) {
                     SunsAltitude = MachinesPrevAlt[machineNumber] + altMove;
                     SunsAzimuth = MachinesPrevAz[machineNumber] + azMove;
                 }
 
-                if (float(pgm_read_float(&MachineSettings[machineNumber][1])) == 2) {
+                if (float(pgm_read_float(&MachineSettings[machineNumber][1])) == HELIOSTAT) {
                     MachineTargetAlt[machineNumber] = MachineTargetAlt[machineNumber] + altMove;
                     MachineTargetAz[machineNumber] = MachineTargetAz[machineNumber] + azMove;
                 }
@@ -152,24 +152,24 @@ long GearRatioMoveMotor(int altOrAz, float MachinesPreviousAngle, float Machines
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-void resetPositionOfMachine(float altMotorDirection, float altLimitAngle, float altGearRatio, float altb, float altc, int altAcuteObtuse, float altAngleAtZero, float azMotorDirection, float azLimitAngle, float azGearRatio, float azb, float azc, int azAcuteObtuse, float azAngleAtZero)
+void resetPositionOfMachine(float altMotorDirection, float altLimitAngle, float altGearRatio, float altb, float altc, linearAngle_t altAcuteObtuse, float altAngleAtZero, float azMotorDirection, float azLimitAngle, float azGearRatio, float azb, float azc, linearAngle_t azAcuteObtuse, float azAngleAtZero)
 {
-    if (float(pgm_read_float(&MachineSettings[machineNumber][0])) == 0) { //Machine uses Gear Reduction System for both AZIMUTH and ALTITUDE
+    if (float(pgm_read_float(&MachineSettings[machineNumber][0])) == ALT_GEAR_AZI_GEAR) { //Machine uses Gear Reduction System for both AZIMUTH and ALTITUDE
         gearReductionReset(2, azMotorDirection, azLimitAngle, azGearRatio);
         gearReductionReset(1, altMotorDirection, altLimitAngle, altGearRatio);
     }
 
-    if (float(pgm_read_float(&MachineSettings[machineNumber][0])) == 1) { //Machine uses Linear Actuator for both AZIMUTH and ALTITUDE
+    if (float(pgm_read_float(&MachineSettings[machineNumber][0])) == ALT_LINEAR_AZI_LINEAR) { //Machine uses Linear Actuator for both AZIMUTH and ALTITUDE
         linearActuatorReset(2, azMotorDirection, azLimitAngle, azGearRatio, azb, azc, azAcuteObtuse, azAngleAtZero);
         linearActuatorReset(1, altMotorDirection, altLimitAngle, altGearRatio, altb, altc, altAcuteObtuse, altAngleAtZero);
     }
 
-    if (float(pgm_read_float(&MachineSettings[machineNumber][0])) == 2) { //Machine uses Linear Actuator for ALTITUDE and Gear Reduction System for AZIMUTH
+    if (float(pgm_read_float(&MachineSettings[machineNumber][0])) == ALT_LINEAR_AZI_GEAR) { //Machine uses Linear Actuator for ALTITUDE and Gear Reduction System for AZIMUTH
         gearReductionReset(2, azMotorDirection, azLimitAngle, azGearRatio);
         linearActuatorReset(1, altMotorDirection, altLimitAngle, altGearRatio, altb, altc, altAcuteObtuse, altAngleAtZero);
     }
 
-    if (float(pgm_read_float(&MachineSettings[machineNumber][0])) == 3) { //Machine uses Linear Actuator for AZIMUTH and Gear Reduction System for ALTITUDE
+    if (float(pgm_read_float(&MachineSettings[machineNumber][0])) == ALT_GEAR_AZI_LINEAR) { //Machine uses Linear Actuator for AZIMUTH and Gear Reduction System for ALTITUDE
         linearActuatorReset(2, azMotorDirection, azLimitAngle, azGearRatio, azb, azc, azAcuteObtuse, azAngleAtZero);
         gearReductionReset(1, altMotorDirection, altLimitAngle, altGearRatio);
     }
