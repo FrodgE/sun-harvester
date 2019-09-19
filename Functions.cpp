@@ -252,7 +252,7 @@ void ManualControlThroughSerial()
         machineNumberInput = 0;
     }
 
-    if (machineType_t(pgm_read_float(&MachineSettings[machineNumber][1])) == SUN_TRACKER || digitalRead(HeliostatToSun) == HIGH) { //MANUAL CONTROL OF SUN TRACKER
+    if (machineType_t(pgm_read_float(&MachineSettings[machineNumberInput][1])) == SUN_TRACKER || digitalRead(HeliostatToSun) == HIGH) { //MANUAL CONTROL OF SUN TRACKER
         Serial.println("Machine's Current Altitude:");
         Serial.println(MachinesPrevAlt[machineNumberInput], 4);
         Serial.println("Machine's Current Azimuth:");
