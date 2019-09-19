@@ -349,6 +349,7 @@ void loop()
 
         moveMachine(PrevAltTargetsArray[machineNumber], PrevAzTargetsArray[machineNumber],
             MachineTargetAlt[machineNumber], MachineTargetAz[machineNumber],
+            altAziAssy_t(pgm_read_float(&MachineSettings[machineNumber][0])),
             machineType_t(pgm_read_float(&MachineSettings[machineNumber][1])),
             float(pgm_read_float(&MachineSettings[machineNumber][2])),
             float(pgm_read_float(&MachineSettings[machineNumber][3])),
