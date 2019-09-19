@@ -1,34 +1,33 @@
 #ifndef globals_h
 #define globals_h
 
+#include "types.h"
 #include "arduino.h"
 
 //Put how many machines you want to control here
 #define numberOfMachines 1
 
+extern bool FirstIterationAfterArduinoReset;
+extern bool joystickMode;
+extern bool joystickTriggerOnce;
+extern bool justFinishedManualControl;
+extern bool potentiometerIsConnected;
 
 extern int altitudeDirPin;
 extern int altitudeStepPin;
 extern int azimuthDirPin;
 extern int azimuthStepPin;
 extern int calculationScale;
-extern int calculationSpeed;
-extern int enableHIGHorLOW;
 extern int EnablePin;
-extern int FirstIterationAfterArduinoReset;
 extern int invertLR;
 extern int invertUD;
 extern int iterationsAfterReset;
 extern int joystickLRAnalogPin;
-extern int joystickModeOnOff;
-extern int joystickTriggerOnce;
 extern int joystickUDAnalogPin;
-extern int justFinishedManualControl;
 extern int machineNumber;
 extern int manualMachineNumber;
 extern int minusOneButton;
 extern int plusOneButton;
-extern int potentiometerIsConnected;
 extern int targetsUsed;
 
 extern const int altLimitPin;
@@ -71,5 +70,8 @@ extern float MachineTargetAz[];
 
 extern const PROGMEM int HourAngleArray[];
 extern const float MachineSettings[][20] PROGMEM;
+
+extern activeHighLow_t enableHIGHorLOW;
+extern calculationSpeed_t calculationSpeed;
 
 #endif

@@ -27,4 +27,22 @@ typedef enum
     OBTUSE
 } linearAngle_t;
 
+typedef enum
+{
+    ALTITUDE = 1,
+    AZIMUTH
+} altAz_t;
+
+typedef enum
+{
+    ACTIVE_LOW,
+    ACTIVE_HIGH
+} activeHighLow_t;
+
+typedef enum
+{
+    SLOW_ACCURATE,
+    FAST_INACCURATE
+} calculationSpeed_t;
+
 #endif

@@ -22,14 +22,14 @@ float leadscrewLength(float b, float c, linearAngle_t AcuteObtuse, float angle, 
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-long linearActuatorMoveMotor(int altOrAz, float MachinesPreviousAngle, float MachinesNewAngle, float GearRatio, float MotorDirection, float b, float c, linearAngle_t AcuteObtuse, float AngleAtZero)
+long linearActuatorMoveMotor(altAz_t altOrAz, float MachinesPreviousAngle, float MachinesNewAngle, float GearRatio, float MotorDirection, float b, float c, linearAngle_t AcuteObtuse, float AngleAtZero)
 {
     float NewLength = leadscrewLength(b, c, AcuteObtuse, MachinesNewAngle, AngleAtZero); //New Leadscrew Length
     float PreviousLength = leadscrewLength(b, c, AcuteObtuse, MachinesPreviousAngle, AngleAtZero); //Previous Leadscrew Length
     float ChangeInLength = NewLength - PreviousLength;
     float NumberOfSteps;
 
-    if (altOrAz == 1) {
+    if (altOrAz == ALTITUDE) {
         NumberOfSteps = steps * ChangeInLength * GearRatio * MotorDirection + altLeftoverSteps[machineNumber];
         if (abs(NumberOfSteps) == NumberOfSteps) {
             altLeftoverSteps[machineNumber] = abs(float(NumberOfSteps - float(long(NumberOfSteps))));
@@ -38,7 +38,7 @@ long linearActuatorMoveMotor(int altOrAz, float MachinesPreviousAngle, float Mac
         }
     }
 
-    if (altOrAz == 2) {
+    if (altOrAz == AZIMUTH) {
         NumberOfSteps = steps * ChangeInLength * GearRatio * MotorDirection + azLeftoverSteps[machineNumber];
         if (abs(NumberOfSteps) == NumberOfSteps) {
             azLeftoverSteps[machineNumber] = abs(float(NumberOfSteps - float(long(NumberOfSteps))));
@@ -51,7 +51,7 @@ long linearActuatorMoveMotor(int altOrAz, float MachinesPreviousAngle, float Mac
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-void linearActuatorReset(int altOrAz, float MotorDirection, float LimitAngle, float GearRatio, float b, float c, linearAngle_t AcuteObtuse, float AngleAtZero)
+void linearActuatorReset(altAz_t altOrAz, float MotorDirection, float LimitAngle, float GearRatio, float b, float c, linearAngle_t AcuteObtuse, float AngleAtZero)
 {
     int dirMod = 1;
     if (AcuteObtuse == OBTUSE) {
@@ -60,10 +60,10 @@ void linearActuatorReset(int altOrAz, float MotorDirection, float LimitAngle, fl
     findLimits(altOrAz, MotorDirection * dirMod, LimitAngle); //Seeks out limit switch
     float dif = leadscrewLength(b, c, AcuteObtuse, positionAfterReset(LimitAngle), AngleAtZero) - leadscrewLength(b, c, AcuteObtuse, LimitAngle, AngleAtZero);
     float NumberOfSteps = steps * dif * GearRatio * MotorDirection;
-    if (altOrAz == 2) {
-        moveToPosition(1, 0, (NumberOfSteps));
+    if (altOrAz == AZIMUTH) {
+        moveToPosition(true, 0, (NumberOfSteps));
     } //Moves motor away from limit switch
-    if (altOrAz == 1) {
-        moveToPosition(1, (NumberOfSteps), 0);
+    if (altOrAz == ALTITUDE) {
+        moveToPosition(true, (NumberOfSteps), 0);
     } //Moves motor away from limit switch
 }

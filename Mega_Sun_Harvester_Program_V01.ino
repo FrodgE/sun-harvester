@@ -20,11 +20,11 @@ float latitude = 39.19;
 float longitude = -78.16;
 float timezone = -5;
 
-//If you live in the northern hemisphere, put 0 here. If you live in the southern hemisphere put 1.
-int useNorthAsZero = 0;
+//If you live in the northern hemisphere, put false here. If you live in the southern hemisphere put true.
+bool useNorthAsZero = false;
 
-//Put a 0 here if you have not connected the target changer potentiometer to the circuit. Put a 1 here if it is connected.
-int potentiometerIsConnected = 1;
+//Put false here if you have not connected the target changer potentiometer to the circuit. Put true here if it is connected.
+bool potentiometerIsConnected = true;
 
 //INTERVAL BETWEEN MACHINE POSITION UPDATES
 //Lets the program know how often to update the position of the machine(s) (in seconds)
@@ -72,7 +72,7 @@ long azimuthMax = 1000000;
 //enable on HIGH or LOW
 //Put a 0 here if your driver boards enable the stepper motors when the enable pin is written LOW.
 //Put a 1 here if your driver boards enable the stepper motors when the enable pin is written HIGH.
-int enableHIGHorLOW = 0;
+activeHighLow_t enableHIGHorLOW = ACTIVE_LOW;
 
 ///////////////////////////////////////////////////////////
 //PIN ASSIGNMENT
@@ -134,7 +134,7 @@ const float MachineSettings[][20] PROGMEM = {
 
 //BigNumber Library Settings
 int calculationScale = 10;
-int calculationSpeed = 0; // 0 for slow, 1 for fast (but less accurate)
+calculationSpeed_t calculationSpeed = SLOW_ACCURATE; // 0 for slow, 1 for fast (but less accurate)
 
 ///////////////////////////////////////////////////////////
 //MISC. VARIABLES USED THROUGHOUT THE PROGRAM
@@ -142,11 +142,12 @@ int calculationSpeed = 0; // 0 for slow, 1 for fast (but less accurate)
 float pi = 3.14159265, SunsAltitude, SunsAzimuth, h, delta;
 //float helioaltdif, helioazdif, prehelioalt, prehelioaz, helioalt, helioaz;
 //float preAlt = 0, preAz = 0, altdif, azdif;
-int iterationsAfterReset, preTargetsUsed, machineNumber, windToggleCount, midCycle, FirstIterationAfterArduinoReset, justFinishedManualControl;
+int iterationsAfterReset, preTargetsUsed, machineNumber, windToggleCount, midCycle;
 int targetsUsed = 1;
 unsigned long updateTime = 0, now = 0;
 float altManualSpeedSwap, azManualSpeedSwap, altMove, azMove, UDCenter, LRCenter;
-int joystickModeOnOff, joystickTriggerOnce, manualMachineNumber;
+int manualMachineNumber;
+bool FirstIterationAfterArduinoReset = false, joystickMode, joystickTriggerOnce, justFinishedManualControl;
 
 ///////////////////////////////////////////////////////////
 //END MISC. VARIABLES
@@ -248,7 +249,7 @@ void loop()
     byte secondRTC, minuteRTC, hourRTC, dayOfWeekRTC, dayOfMonthRTC, monthRTC, yearRTC;
 
     getDateDs1307(&secondRTC, &minuteRTC, &hourRTC, &dayOfWeekRTC, &dayOfMonthRTC, &monthRTC, &yearRTC);
-    if (joystickModeOnOff != 1) {
+    if (joystickMode == false) {
         Serial.println(" ");
         Serial.print("Time: ");
         printtime(hourRTC, minuteRTC, secondRTC, monthRTC, dayOfMonthRTC, yearRTC, dayOfWeekRTC); //Displays the RTC time
@@ -265,7 +266,7 @@ void loop()
     second = secondRTC;
     /////////////////////////////////////////////////////////////////////////////////
 
-    if ((digitalRead(manualModeOnOffPin) != HIGH) && (joystickModeOnOff != 1)) {
+    if ((digitalRead(manualModeOnOffPin) != HIGH) && (joystickMode == false)) {
         if ((hour == hourReset) && (minute == 0) && (second < 10)) { //If the variable "iterationsAfterReset" is set to 0, the machines reset themselves on the limit switches
             iterationsAfterReset = 0;
         }
@@ -289,7 +290,7 @@ void loop()
     ////  Serial.print("Minute ");
     ////  Serial.println(minute);
 
-    //if (digitalRead(WindProtectionSwitch)!=HIGH && (FirstIterationAfterArduinoReset!=0)){
+    //if (digitalRead(WindProtectionSwitch)!=HIGH && (FirstIterationAfterArduinoReset==true)){
     //Updates the position of the sun, which in turn tells the machine(s) that it is time to move.
     if ((now >= updateTime) || (iterationsAfterReset == 0)) {
         updateTime = updateEvery * 1000 + millis();
@@ -299,7 +300,7 @@ void loop()
         findSunsAltAndAzOne(year, month, day, timezone, hour, minute, second, latitude, longitude);
         SunsAltitude = SunsAltitude + (1.02 / tan((SunsAltitude + 10.3 / (SunsAltitude + 5.11)) * pi / 180.0)) / 60.0; //Refraction Compensation: Meeus Pg. 105
 
-        if ((joystickModeOnOff != 1)) {
+        if ((joystickMode == false)) {
             Serial.print("Sun's Alt: ");
             Serial.println(SunsAltitude, 3);
             delay(50);
@@ -310,7 +311,7 @@ void loop()
             Serial.println(numberOfMachines);
             delay(50);
         }
-        if (useNorthAsZero == 1) {
+        if (useNorthAsZero == true) {
             if (SunsAzimuth < 0) {
                 SunsAzimuth = (SunsAzimuth + 180) * -1;
             }
@@ -329,17 +330,17 @@ void loop()
 
     //This code allows for manual control of the machine through the
     //Serial Monitor when the "manual switch" is turned on.
-    if ((digitalRead(manualModeOnOffPin) == HIGH) && FirstIterationAfterArduinoReset != 0) {
-        if (joystickModeOnOff != 1) { //prevents manual control through both joystick and serial at the same time
+    if ((digitalRead(manualModeOnOffPin) == HIGH) && FirstIterationAfterArduinoReset == true) {
+        if (joystickMode == false) { //prevents manual control through both joystick and serial at the same time
             ManualControlThroughSerial();
             updateTime = millis();
-            justFinishedManualControl = 1;
+            justFinishedManualControl = true;
         }
     }
     //END of manual control code
 
     for (int i = 0; i <= numberOfMachines - 1; i++) {
-        if (joystickModeOnOff != 1) {
+        if (joystickMode == false) {
             machineNumber = i; //Put which machine you are trying to control here
             Serial.print("Machine Number ");
             Serial.println(machineNumber);
@@ -372,7 +373,7 @@ void loop()
         PrevAzTargetsArray[machineNumber] = MachineTargetAz[machineNumber];
         preTargetsUsed = targetsUsed;
 
-        if (joystickModeOnOff == 1) {
+        if (joystickMode == true) {
             break;
         }
     } //END for (float i=1; i <= numberOfMachines; i++)
@@ -397,7 +398,7 @@ void loop()
         midCycle = midCycle + 1;
     }
 
-    FirstIterationAfterArduinoReset = 1;
+    FirstIterationAfterArduinoReset = true;
     //}//END do not reset after arduino resets when Wind Protection Switch is high
     //  //}}//End for loops that run the program at fast speed
 

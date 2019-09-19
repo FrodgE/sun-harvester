@@ -17,21 +17,21 @@ byte machineToByte(int MachineNumber);
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //This code moves the stepper motors
-void moveToPosition(int AccelYesOrNo, long altsteps, long azsteps)
+void moveToPosition(bool Accel, long altsteps, long azsteps)
 {
     //Serial.println("azsteps");
     //Serial.println(azsteps);
     //Serial.println("altsteps");
     //Serial.println(altsteps);
 
-    if (joystickModeOnOff == 1 && iterationsAfterReset > 0) { //This code runs when manually controlling the machines through joystick
+    if (joystickMode == true && iterationsAfterReset > 0) { //This code runs when manually controlling the machines through joystick
         joystickMoveMotors(altsteps, altitudeStepPin, altitudeDirPin, altManualSpeed, azsteps, azimuthStepPin, azimuthDirPin, azManualSpeed);
         //moveMotorWithoutAccel(azsteps, azimuthStepPin, azimuthDirPin, azManualSpeed);
         //moveMotorWithoutAccel(altsteps, altitudeStepPin, altitudeDirPin, altManualSpeed);
-        AccelYesOrNo = 3;
+        return;
     }
 
-    if (AccelYesOrNo == 1) { //This code runs during normal operation
+    if (Accel == true) { //This code runs during normal operation
         moveMotorWithAccel(azsteps, azimuthStepPin, azimuthDirPin, azSpeed, azAccel);
         moveMotorWithAccel(altsteps, altitudeStepPin, altitudeDirPin, altSpeed, altAccel);
     }
@@ -112,12 +112,12 @@ void delayInMicroseconds(long delayInMicrosec)
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //This code resets the machine on the limit switches
-void findLimits(int altOrAz, int motorDirection, float limitAngle)
+void findLimits(altAz_t altOrAz, int motorDirection, float limitAngle)
 {
-    if (altOrAz == 1) {
+    if (altOrAz == ALTITUDE) {
         searchForLimit(limitAngle, altitudeDirPin, altitudeStepPin, altResetSpeed, altLimitPin, altitudeMax, motorDirection);
     }
-    if (altOrAz == 2) {
+    if (altOrAz == AZIMUTH) {
         searchForLimit(limitAngle, azimuthDirPin, azimuthStepPin, azResetSpeed, azLimitPin, azimuthMax, motorDirection);
     }
 }
@@ -252,7 +252,7 @@ void ManualControlThroughSerial()
         machineNumberInput = 0;
     }
 
-    if (float(pgm_read_float(&MachineSettings[machineNumber][1])) == 1 || digitalRead(HeliostatToSun) == HIGH) { //MANUAL CONTROL OF SUN TRACKER
+    if (machineType_t(pgm_read_float(&MachineSettings[machineNumber][1])) == SUN_TRACKER || digitalRead(HeliostatToSun) == HIGH) { //MANUAL CONTROL OF SUN TRACKER
         Serial.println("Machine's Current Altitude:");
         Serial.println(MachinesPrevAlt[machineNumberInput], 4);
         Serial.println("Machine's Current Azimuth:");
@@ -372,7 +372,7 @@ byte machineToByte(int MachineNumber)
 void MachineOn(int number)
 {
     turnMCP23017PinOn(number);
-    if (enableHIGHorLOW == 0) {
+    if (enableHIGHorLOW == ACTIVE_LOW) {
         digitalWrite(EnablePin, LOW);
     } else {
         digitalWrite(EnablePin, HIGH);
@@ -384,7 +384,7 @@ void MachineOff(int number)
 {
     turnMCP23017PinOff();
     if (digitalRead(manualModeOnOffPin) != HIGH) {
-        if (enableHIGHorLOW == 0) {
+        if (enableHIGHorLOW == ACTIVE_LOW) {
             digitalWrite(EnablePin, HIGH);
         } else {
             digitalWrite(EnablePin, LOW);

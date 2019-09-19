@@ -1,5 +1,6 @@
 #include "Joystick_Control_Code.h"
 #include "Functions.h"
+#include "types.h"
 #include "globals.h"
 
 #include <Arduino.h>
@@ -8,20 +9,20 @@ void ManualControlThroughJoystick();
 
 void checkJoystick()
 {
-    if (digitalRead(plusOneButton) == HIGH && digitalRead(minusOneButton) == HIGH && joystickModeOnOff == 0 && joystickTriggerOnce == 0) {
-        joystickModeOnOff = 1;
-        joystickTriggerOnce = 1;
-        justFinishedManualControl = 1;
+    if (digitalRead(plusOneButton) == HIGH && digitalRead(minusOneButton) == HIGH && joystickMode == false && joystickTriggerOnce == false) {
+        joystickMode = true;
+        joystickTriggerOnce = true;
+        justFinishedManualControl = true;
         UDCenter = analogRead(joystickUDAnalogPin);
         LRCenter = analogRead(joystickLRAnalogPin);
         MachineOn(machineNumber);
     }
     if (digitalRead(plusOneButton) == LOW && digitalRead(minusOneButton) == LOW) {
-        joystickTriggerOnce = 0;
+        joystickTriggerOnce = false;
     }
-    if (digitalRead(plusOneButton) == HIGH && digitalRead(minusOneButton) == HIGH && joystickModeOnOff == 1 && joystickTriggerOnce == 0) {
-        joystickModeOnOff = 0;
-        joystickTriggerOnce = 1;
+    if (digitalRead(plusOneButton) == HIGH && digitalRead(minusOneButton) == HIGH && joystickMode == true && joystickTriggerOnce == false) {
+        joystickMode = false;
+        joystickTriggerOnce = true;
     }
     if (digitalRead(plusOneButton) == HIGH) {
         manualMachineNumber = manualMachineNumber + 1;
@@ -39,10 +40,10 @@ void checkJoystick()
         MachineOn(manualMachineNumber);
         delay(200);
     }
-    if (joystickModeOnOff == 1) {
+    if (joystickMode == true) {
         machineNumber = manualMachineNumber;
     }
-    if (joystickModeOnOff == 1) {
+    if (joystickMode == true) {
         ManualControlThroughJoystick();
     }
 }
@@ -66,12 +67,12 @@ void ManualControlThroughJoystick()
             azManualSpeed = 5;
         }
 
-        if (digitalRead(HeliostatToSun) == HIGH || float(pgm_read_float(&MachineSettings[machineNumber][1])) == 1) {
+        if (digitalRead(HeliostatToSun) == HIGH || machineType_t(pgm_read_float(&MachineSettings[machineNumber][1])) == SUN_TRACKER) {
             SunsAltitude = MachinesPrevAlt[machineNumber] + altMove;
             SunsAzimuth = MachinesPrevAz[machineNumber] + azMove;
         }
 
-        if (float(pgm_read_float(&MachineSettings[machineNumber][1])) == 2) {
+        if (machineType_t(pgm_read_float(&MachineSettings[machineNumber][1])) == HELIOSTAT) {
             MachineTargetAlt[machineNumber] = MachineTargetAlt[machineNumber] + altMove;
             MachineTargetAz[machineNumber] = MachineTargetAz[machineNumber] + azMove;
         }

@@ -173,19 +173,19 @@ BigNumber SunsDeclination(BigNumber epsilon, BigNumber lambda)
     //Sun's Declination (Meeus page 165)
     char buf1[15];
     BigNumber v1, v2, v3, v4;
-    if (calculationSpeed == 1) {
+    if (calculationSpeed == FAST_INACCURATE) {
         v1 = dtostrf(sin(bigNumberToFloat(BigNumberMath::to_BigRad(epsilon))), 5, 5, buf1); // sj
         v2 = dtostrf(sin(bigNumberToFloat(BigNumberMath::to_BigRad(lambda))), 5, 5, buf1); // sj
     }
-    if (calculationSpeed == 0) {
+    if (calculationSpeed == SLOW_ACCURATE) {
         v1 = BigNumberMath::sine(BigNumberMath::to_BigRad(epsilon)); // sj
         v2 = BigNumberMath::sine(BigNumberMath::to_BigRad(lambda)); // sj
     }
     v3 = v1 * v2;
-    if (calculationSpeed == 1) {
+    if (calculationSpeed == FAST_INACCURATE) {
         v4 = dtostrf(asin(bigNumberToFloat(v3)), 5, 5, buf1);
     }
-    if (calculationSpeed == 0) {
+    if (calculationSpeed == SLOW_ACCURATE) {
         v4 = BigNumberMath::arcsine(v3); // sj
         //v4 = dtostrf(asin(bigNumberToFloat(v3)),5,5,buf1);  // sj
     }
@@ -199,13 +199,13 @@ BigNumber SunsRightAscension(BigNumber epsilon, BigNumber lambda)
     BigNumber v1, v2, v3, v4;
     char buf1[15];
     //Sun's Right Acension (Meeus page 165) (divided by 15 to convert to hours)
-    if (calculationSpeed == 1) {
+    if (calculationSpeed == FAST_INACCURATE) {
         v1 = dtostrf(cos(bigNumberToFloat(BigNumberMath::to_BigRad(epsilon))), 5, 5, buf1); // sj
         v2 = dtostrf(sin(bigNumberToFloat(BigNumberMath::to_BigRad(lambda))), 5, 5, buf1); // sj
         v3 = dtostrf(cos(bigNumberToFloat(BigNumberMath::to_BigRad(lambda))), 5, 5, buf1); // sj
         v4 = dtostrf(atan2(bigNumberToFloat((v1 * v2)), bigNumberToFloat(v3)), 5, 5, buf1);
     }
-    if (calculationSpeed == 0) {
+    if (calculationSpeed == SLOW_ACCURATE) {
         v1 = BigNumberMath::cosine(BigNumberMath::to_BigRad(epsilon)); // sj
         v2 = BigNumberMath::sine(BigNumberMath::to_BigRad(lambda)); // sj
 
@@ -262,14 +262,14 @@ void findAlt(float latitude, BigNumber delta, BigNumber h)
     char buf1[15];
     v6 = dtostrf(latitude, 5, 5, buf1);
     //Local Horizontal Coordinates (Meeus Page 93)
-    if (calculationSpeed == 1) {
+    if (calculationSpeed == FAST_INACCURATE) {
         v1 = dtostrf(sin(bigNumberToFloat(BigNumberMath::to_BigRad(v6))), 5, 5, buf1); // sj
         v2 = dtostrf(sin(bigNumberToFloat(BigNumberMath::to_BigRad(delta))), 5, 5, buf1); // sj
         v3 = dtostrf(cos(bigNumberToFloat(BigNumberMath::to_BigRad(v6))), 5, 5, buf1); // sj
         v4 = dtostrf(cos(bigNumberToFloat(BigNumberMath::to_BigRad(delta))), 5, 5, buf1); // sj
         v5 = dtostrf(cos(bigNumberToFloat(BigNumberMath::to_BigRad(h))), 5, 5, buf1); // sj
     }
-    if (calculationSpeed == 0) {
+    if (calculationSpeed == SLOW_ACCURATE) {
         v1 = BigNumberMath::sine(BigNumberMath::to_BigRad(v6)); // sj
         v2 = BigNumberMath::sine(BigNumberMath::to_BigRad(delta)); // sj
 
@@ -290,10 +290,10 @@ void findAlt(float latitude, BigNumber delta, BigNumber h)
         v5 = BigNumberMath::cosine(BigNumberMath::to_BigRad(h)); // sj
     }
     v6 = (v1 * v2 + v3 * v4 * v5);
-    if (calculationSpeed == 1) {
+    if (calculationSpeed == FAST_INACCURATE) {
         v7 = dtostrf(asin(bigNumberToFloat(v6)), 5, 5, buf1);
     }
-    if (calculationSpeed == 0) {
+    if (calculationSpeed == SLOW_ACCURATE) {
         //v7 = dtostrf(asin(bigNumberToFloat(v6)),5,5,buf1);
         v7 = BigNumberMath::arcsine(v6); // sj
     }
@@ -307,19 +307,19 @@ void findAz(float latitude, BigNumber delta, BigNumber h)
     //Local Horizontal Coordinates (Meeus Page 93)
     char buf1[15];
     v6 = dtostrf(latitude, 5, 5, buf1);
-    if (calculationSpeed == 1) {
+    if (calculationSpeed == FAST_INACCURATE) {
         v1 = dtostrf(sin(bigNumberToFloat(BigNumberMath::to_BigRad(h))), 5, 5, buf1); // sj
     }
-    if (calculationSpeed == 0) {
+    if (calculationSpeed == SLOW_ACCURATE) {
         v1 = BigNumberMath::sine(BigNumberMath::to_BigRad(h)); // sj
     }
 
     v7 = findAzSubFunction(v6, delta, h);
 
-    if (calculationSpeed == 1) {
+    if (calculationSpeed == FAST_INACCURATE) {
         v6 = dtostrf((atan2(bigNumberToFloat(v1), bigNumberToFloat(v7))), 5, 5, buf1);
     }
-    if (calculationSpeed == 0) {
+    if (calculationSpeed == SLOW_ACCURATE) {
         v6 = BigNumberMath::arctan2(v7, v1); // sj - note: arguments reversed compared to atan2
         //v6 = dtostrf((atan2(bigNumberToFloat(v1),bigNumberToFloat(v7))),5,5,buf1); // sj
     }
@@ -332,14 +332,14 @@ BigNumber findAzSubFunction(BigNumber latitude, BigNumber delta, BigNumber h)
 {
     BigNumber v2, v3, v4, v5, v6, v7, v8;
     char buf1[15];
-    if (calculationSpeed == 1) {
+    if (calculationSpeed == FAST_INACCURATE) {
         v2 = dtostrf(cos(bigNumberToFloat(BigNumberMath::to_BigRad(h))), 5, 5, buf1); // sj
         v3 = dtostrf(sin(bigNumberToFloat(BigNumberMath::to_BigRad(latitude))), 5, 5, buf1); // sj
         v7 = dtostrf(sin(bigNumberToFloat(BigNumberMath::to_BigRad(delta))), 5, 5, buf1); // sj
         v8 = dtostrf(cos(bigNumberToFloat(BigNumberMath::to_BigRad(delta))), 5, 5, buf1); // sj
         v5 = dtostrf(cos(bigNumberToFloat(BigNumberMath::to_BigRad(latitude))), 5, 5, buf1); // sj
     }
-    if (calculationSpeed == 0) {
+    if (calculationSpeed == SLOW_ACCURATE) {
         v2 = BigNumberMath::cosine(BigNumberMath::to_BigRad(h)); // sj
         v3 = BigNumberMath::sine(BigNumberMath::to_BigRad(latitude)); // sj
         v7 = BigNumberMath::sine(BigNumberMath::to_BigRad(delta)); // sj
