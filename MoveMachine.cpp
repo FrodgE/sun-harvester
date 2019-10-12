@@ -42,31 +42,11 @@ void moveMachine(float preTargetAlt, float preTargetAz, float targetalt, float t
 
         if (sunTrackerOrHelio == HELIOSTAT) { //Machine Acts as Heliostat
             FindHeliostatAltAndAz(SunsAltitude, SunsAzimuth, targetalt, targetaz, MachinesNewAltitude, MachinesNewAzimuth);
-            if (joystickMode == false) {
-                if (FirstIterationAfterArduinoReset == true) {
-
-                    Serial.print("Target's Alt: ");
-                    Serial.println(MachineTargetAlt[machineNumber], 3);
-                    delay(50);
-                    Serial.print("Target's Az: ");
-                    Serial.println(MachineTargetAz[machineNumber], 3);
-                    delay(50);
-                }
-            }
         }
 
         if (digitalRead(WindProtectionSwitch) == HIGH) {
             MachinesNewAltitude = machineAltParkAngle;
             MachinesNewAzimuth = machineAzParkAngle;
-        }
-
-        if (joystickMode == false) {
-            Serial.print("Machine's Alt: ");
-            Serial.println(MachinesNewAltitude, 3);
-            delay(50);
-            Serial.print("Machine's Az: ");
-            Serial.println(MachinesNewAzimuth, 3);
-            delay(50);
         }
 
         //MACHINE ONLY MOVES WHEN REQUIRED POSITION IS WITHIN MACHINE'S LIMITS
@@ -102,6 +82,28 @@ void moveMachine(float preTargetAlt, float preTargetAz, float targetalt, float t
                         MachineOn(machineNumber);
                     }
 
+                    Serial.print("Machine Number ");
+                    Serial.println(machineNumber);
+
+                    Serial.print("Current Target Group: ");
+                    Serial.println(targetsUsed);
+
+                    if (joystickMode == false) {
+                        if (sunTrackerOrHelio == HELIOSTAT) { //Machine Acts as Heliostat
+                            if (FirstIterationAfterArduinoReset == true) {
+                                Serial.print("Target's Alt: ");
+                                Serial.println(MachineTargetAlt[machineNumber], 3);
+                                Serial.print("Target's Az: ");
+                                Serial.println(MachineTargetAz[machineNumber], 3);
+                            }
+                        }
+
+                        Serial.print("Machine's Alt: ");
+                        Serial.println(MachinesNewAltitude, 3);
+                        Serial.print("Machine's Az: ");
+                        Serial.println(MachinesNewAzimuth, 3);
+                    }
+
                     moveToPosition(true, altsteps, azsteps);
                 }
 
@@ -109,7 +111,25 @@ void moveMachine(float preTargetAlt, float preTargetAz, float targetalt, float t
                 MachinesPrevAz[machineNumber] = MachinesNewAzimuth;
             } //if (iterationsAfterReset > 1)
         } else {
+            Serial.print("Machine Number ");
+            Serial.println(machineNumber);
             Serial.println("Move exceeds bounds");
+            if ((MachinesNewAzimuth <= minAz) || (MachinesNewAzimuth >= maxAz)) {
+                Serial.print("Attempted azimuth ");
+                Serial.println(MachinesNewAzimuth);
+                Serial.print("Machine minimum azimuth ");
+                Serial.println(minAz);
+                Serial.print("Machine maximum azimuth ");
+                Serial.println(maxAz);
+            }
+            if ((MachinesNewAltitude <= minAlt) || (MachinesNewAltitude >= maxAlt)) {
+                Serial.print("Attempted altitude ");
+                Serial.println(MachinesNewAltitude);
+                Serial.print("Machine minimum altitude ");
+                Serial.println(minAlt);
+                Serial.print("Machine maximum altitude ");
+                Serial.println(maxAlt);
+            }
             if (joystickMode == true) {
                 if (sunTrackerOrHelio == SUN_TRACKER) {
                     SunsAltitude = MachinesPrevAlt[machineNumber] + altMove;

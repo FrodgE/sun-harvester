@@ -338,8 +338,6 @@ void loop()
     for (int i = 0; i <= numberOfMachines - 1; i++) {
         if (joystickMode == false) {
             machineNumber = i; //Put which machine you are trying to control here
-            Serial.print("Machine Number ");
-            Serial.println(machineNumber);
         }
 
         moveMachine(PrevAltTargetsArray[machineNumber], PrevAzTargetsArray[machineNumber],

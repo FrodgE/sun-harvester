@@ -41,8 +41,6 @@ void TargetControl(int second, int minute, int hour, int day, int month, int yea
         if (potentiometerIsConnected == false) {
             targetsUsed = 1;
         }
-        Serial.print("Current Target Group: ");
-        Serial.println(targetsUsed);
 
         //SAVES TARGET SETTINGS WHEN MANUAL CONTROL THROUGH EITHER THE SERIAL MONITOR OR THE JOYSTICK IS TURNED OFF
         if (justFinishedManualControl == true && digitalRead(manualModeOnOffPin) != HIGH) {
