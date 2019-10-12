@@ -249,16 +249,10 @@ void loop()
     byte secondRTC, minuteRTC, hourRTC, dayOfWeekRTC, dayOfMonthRTC, monthRTC, yearRTC;
 
     getDateDs1307(&secondRTC, &minuteRTC, &hourRTC, &dayOfWeekRTC, &dayOfMonthRTC, &monthRTC, &yearRTC);
-    if (joystickMode == false) {
-        Serial.println(" ");
-        Serial.print("Time: ");
-        printtime(hourRTC, minuteRTC, secondRTC, monthRTC, dayOfMonthRTC, yearRTC, dayOfWeekRTC); //Displays the RTC time
-        delay(500);
-    }
 
     //The variables below can be set to accept input from devices other than an RTC.
     dayOfWeek = dayOfWeekRTC; //NOT CURRENTLY USED
-    year = yearRTC; //NOT CURRENTLY USED
+    year = yearRTC + 2000;
     month = monthRTC;
     day = dayOfMonthRTC;
     hour = hourRTC;
@@ -295,22 +289,16 @@ void loop()
     if ((now >= updateTime) || (iterationsAfterReset == 0)) {
         updateTime = updateEvery * 1000 + millis();
 
+        if (joystickMode == false) {
+            Serial.println(" ");
+            Serial.print("Time: ");
+            printtime(hour, minute, second, month, day, year, dayOfWeek);
+        }
+
         //SunPositionAlgo_LowAc::CalculateSunsPositionLowAc(month, day, hour, minute, second, timezone, latitude, longitude, SunsAltitude, SunsAzimuth, delta, h);
-        year = year + 2000;
         findSunsAltAndAzOne(year, month, day, timezone, hour, minute, second, latitude, longitude);
         SunsAltitude = SunsAltitude + (1.02 / tan((SunsAltitude + 10.3 / (SunsAltitude + 5.11)) * pi / 180.0)) / 60.0; //Refraction Compensation: Meeus Pg. 105
 
-        if ((joystickMode == false)) {
-            Serial.print("Sun's Alt: ");
-            Serial.println(SunsAltitude, 3);
-            delay(50);
-            Serial.print("Sun's Az: ");
-            Serial.println(SunsAzimuth, 3);
-            delay(50);
-            Serial.print("Number of Machines ");
-            Serial.println(numberOfMachines);
-            delay(50);
-        }
         if (useNorthAsZero == true) {
             if (SunsAzimuth < 0) {
                 SunsAzimuth = (SunsAzimuth + 180) * -1;
@@ -323,6 +311,14 @@ void loop()
             //Serial.println(SunsAzimuth);
         }
 
+        if ((joystickMode == false)) {
+            Serial.print("Sun's Alt: ");
+            Serial.println(SunsAltitude, 3);
+            Serial.print("Sun's Az: ");
+            Serial.println(SunsAzimuth, 3);
+            Serial.print("Number of Machines ");
+            Serial.println(numberOfMachines);
+        }
     } //END Update Every X seconds
 
     TargetControl(second, minute, hour, day, month, year, dayOfWeek); //Checks to see if the targets have been changed
@@ -344,7 +340,6 @@ void loop()
             machineNumber = i; //Put which machine you are trying to control here
             Serial.print("Machine Number ");
             Serial.println(machineNumber);
-            delay(50);
         }
 
         moveMachine(PrevAltTargetsArray[machineNumber], PrevAzTargetsArray[machineNumber],
