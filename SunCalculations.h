@@ -1,6 +1,6 @@
 #ifndef suncalculations_h
 #define suncalculations_h
 
-void findSunsAltAndAzOne(int year, int month, int day, int timezone, int hour, int minute, int second, float latitude, float longitude);
+void findSunsAltAndAzOne(const int &year, const int &month, const int &day, const int &timezone, const int &hour, const int &minute, const int &second, const float &latitude, const float &longitude);
 
 #endif

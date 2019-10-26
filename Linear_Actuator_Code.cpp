@@ -4,11 +4,11 @@
 
 #include <Arduino.h>
 
-float leadscrewLength(float b, float c, linearAngle_t AcuteObtuse, float angle, float AngleAtZero);
+float leadscrewLength(const float &b, const float &c, const linearAngle_t &AcuteObtuse, float angle, const float &AngleAtZero);
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //This code calculates the length of the linear actuator.
-float leadscrewLength(float b, float c, linearAngle_t AcuteObtuse, float angle, float AngleAtZero)
+float leadscrewLength(const float &b, const float &c, const linearAngle_t &AcuteObtuse, float angle, const float &AngleAtZero)
 {
     float output;
     if (AcuteObtuse == ACUTE) {
@@ -22,7 +22,7 @@ float leadscrewLength(float b, float c, linearAngle_t AcuteObtuse, float angle, 
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-long linearActuatorMoveMotor(altAz_t altOrAz, float MachinesPreviousAngle, float MachinesNewAngle, float GearRatio, float MotorDirection, float b, float c, linearAngle_t AcuteObtuse, float AngleAtZero)
+long linearActuatorMoveMotor(const altAz_t &altOrAz, const float &MachinesPreviousAngle, const float &MachinesNewAngle, const float &GearRatio, const float &MotorDirection, const float &b, const float &c, const linearAngle_t &AcuteObtuse, const float &AngleAtZero)
 {
     float NewLength = leadscrewLength(b, c, AcuteObtuse, MachinesNewAngle, AngleAtZero); //New Leadscrew Length
     float PreviousLength = leadscrewLength(b, c, AcuteObtuse, MachinesPreviousAngle, AngleAtZero); //Previous Leadscrew Length
@@ -51,7 +51,7 @@ long linearActuatorMoveMotor(altAz_t altOrAz, float MachinesPreviousAngle, float
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-void linearActuatorReset(altAz_t altOrAz, float MotorDirection, float LimitAngle, float GearRatio, float b, float c, linearAngle_t AcuteObtuse, float AngleAtZero)
+void linearActuatorReset(const altAz_t &altOrAz, const float &MotorDirection, const float &LimitAngle, const float &GearRatio, const float &b, const float &c, const linearAngle_t &AcuteObtuse, const float &AngleAtZero)
 {
     int dirMod = 1;
     if (AcuteObtuse == OBTUSE) {

@@ -6,18 +6,18 @@
 #include <EEPROM.h>
 #include <Wire.h>
 
-void moveMotorWithAccel(long numOfSteps, int stepPin, int DirPin, float maxspeed, float Accel);
-void searchForLimit(float limitAngle, int DirPin, int stepPin, int ResetSpeed, int LimitPin, long maxResetSteps, int motorDirection);
-float to_rad(float angle);
-float to_deg(float angle);
+void moveMotorWithAccel(const long &numOfSteps, const int &stepPin, const int &DirPin, const float &maxspeed, const float &Accel);
+void searchForLimit(const float &limitAngle, const int &DirPin, const int &stepPin, const int &ResetSpeed, const int &LimitPin, const long &maxResetSteps, const int &motorDirection);
+float to_rad(const float &angle);
+float to_deg(const float &angle);
 float getFloatFromSerialMonitor();
-void turnMCP23017PinOn(int MachineNumber);
+void turnMCP23017PinOn(const int &MachineNumber);
 void turnMCP23017PinOff();
-byte machineToByte(int MachineNumber);
+byte machineToByte(const int &MachineNumber);
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //This code moves the stepper motors
-void moveToPosition(bool Accel, long altsteps, long azsteps)
+void moveToPosition(const bool &Accel, const long &altsteps, const long &azsteps)
 {
     //Serial.println("azsteps");
     //Serial.println(azsteps);
@@ -39,7 +39,7 @@ void moveToPosition(bool Accel, long altsteps, long azsteps)
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //This code moves the stepper motors with acceleration
-void moveMotorWithAccel(long numOfSteps, int stepPin, int DirPin, float maxspeed, float Accel)
+void moveMotorWithAccel(const long &numOfSteps, const int &stepPin, const int &DirPin, const float &maxspeed, const float &Accel)
 {
     if (abs(numOfSteps) == numOfSteps) {
         digitalWrite(DirPin, HIGH);
@@ -97,7 +97,7 @@ void moveMotorWithAccel(long numOfSteps, int stepPin, int DirPin, float maxspeed
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //This code is used to delay between stepper motor steps
-void delayInMicroseconds(long delayInMicrosec)
+void delayInMicroseconds(const long &delayInMicrosec)
 {
     long t1, t2;
     t1 = micros();
@@ -112,7 +112,7 @@ void delayInMicroseconds(long delayInMicrosec)
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //This code resets the machine on the limit switches
-void findLimits(altAz_t altOrAz, int motorDirection, float limitAngle)
+void findLimits(const altAz_t &altOrAz, const int &motorDirection, const float &limitAngle)
 {
     if (altOrAz == ALTITUDE) {
         searchForLimit(limitAngle, altitudeDirPin, altitudeStepPin, altResetSpeed, altLimitPin, altitudeMax, motorDirection);
@@ -122,7 +122,7 @@ void findLimits(altAz_t altOrAz, int motorDirection, float limitAngle)
     }
 }
 
-void searchForLimit(float limitAngle, int DirPin, int stepPin, int ResetSpeed, int LimitPin, long maxResetSteps, int motorDirection)
+void searchForLimit(const float &limitAngle, const int &DirPin, const int &stepPin, const int &ResetSpeed, const int &LimitPin, const long &maxResetSteps, const int &motorDirection)
 {
     long x;
     int whichDir;
@@ -153,7 +153,7 @@ void searchForLimit(float limitAngle, int DirPin, int stepPin, int ResetSpeed, i
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //This code calculates the angle to move the machine to after the limit switch has been triggered.
-float positionAfterReset(float limitAngle)
+float positionAfterReset(const float &limitAngle)
 {
     float endAltAndAz;
     if (abs(limitAngle) == limitAngle) {
@@ -166,7 +166,7 @@ float positionAfterReset(float limitAngle)
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //This code calculates the angles for the heliostat (returnaltaz = 1 will return alt, 2 returns az)
-void FindHeliostatAltAndAz(float SunsAltitude, float SunsAzimuth, float targetalt, float targetaz, float& machinealt, float& machineaz)
+void FindHeliostatAltAndAz(const float &SunsAltitude, const float &SunsAzimuth, const float &targetalt, const float &targetaz, float &machinealt, float &machineaz)
 {
     float x, y, z, z1, z2, x1, x2, y1, y2, hyp, dist;
 
@@ -193,12 +193,12 @@ void FindHeliostatAltAndAz(float SunsAltitude, float SunsAzimuth, float targetal
     machineaz = to_deg(atan2(y * -1, x));
 }
 
-float to_rad(float angle)
+float to_rad(const float &angle)
 {
     return angle * (pi / 180);
 }
 
-float to_deg(float angle)
+float to_deg(const float &angle)
 {
     return angle * (180 / pi);
 }
@@ -298,7 +298,7 @@ void ManualControlThroughSerial()
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-float eepromReadFloat(int address)
+float eepromReadFloat(const int &address)
 {
     union u_tag {
         byte b[4];
@@ -311,7 +311,7 @@ float eepromReadFloat(int address)
     return u.fval;
 }
 
-void eepromWriteFloat(int address, float value)
+void eepromWriteFloat(const int &address, const float &value)
 {
     union u_tag {
         byte b[4];
@@ -327,7 +327,7 @@ void eepromWriteFloat(int address, float value)
 
 //THESE FUNCTIONS WILL TURN THE PINS OF A MCP23017 ON AND OFF. THIS ALLOWS FOR THE CONTROL OF UP TO 16 MACHINES.
 //EVEN MORE MACHINES COULD BE CONTROLLED BY ADDING MORE MCP23017s, BUT THIS CODE WOULD HAVE TO BE MODIFIED.
-void turnMCP23017PinOn(int MachineNumber)
+void turnMCP23017PinOn(const int &MachineNumber)
 {
     Wire.beginTransmission(0x20);
     Wire.write((byte)0x12); // GPIOA
@@ -353,7 +353,7 @@ void turnMCP23017PinOff()
     delay(100);
 }
 
-byte machineToByte(int MachineNumber)
+byte machineToByte(const int &MachineNumber)
 {
     byte x = 2;
     if (MachineNumber == 0) {
@@ -369,7 +369,7 @@ byte machineToByte(int MachineNumber)
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //This code turns the machine on
-void MachineOn(int number)
+void MachineOn(const int &number)
 {
     turnMCP23017PinOn(number);
     if (enableHIGHorLOW == ACTIVE_LOW) {
@@ -380,7 +380,7 @@ void MachineOn(int number)
 }
 
 //This code turns the machine off
-void MachineOff(int number)
+void MachineOff(const int &number)
 {
     turnMCP23017PinOff();
     if (digitalRead(manualModeOnOffPin) != HIGH) {

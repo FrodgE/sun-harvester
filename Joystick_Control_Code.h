@@ -3,6 +3,6 @@
 
 void checkJoystick();
 
-void joystickMoveMotors(long altsteps, int altStepPin, int altDirPin, float altManualSpd, long azsteps, int azimuthStepPin, int azimuthDirPin, float azManualSpeed);
+void joystickMoveMotors(const long &altsteps, const int &altitudeStepPin, const int &altitudeDirPin, const float &altManualSpeed, const long &azsteps, const int &azimuthStepPin, const int &azimuthDirPin, const float &azManualSpeed);
 
 #endif

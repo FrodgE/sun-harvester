@@ -3,6 +3,6 @@
 
 #include "types.h"
 
-void moveMachine(float preTargetAlt, float preTargetAz, float targetalt, float targetaz, altAziAssy_t assemblyType, machineType_t sunTrackerOrHelio, float altGearRatio, float altMotorDirection, float altb, float altc, float altAngleAtZero, linearAngle_t altAcuteObtuse, float altLimitAngle, float azGearRatio, float azMotorDirection, float azb, float azc, float azAngleAtZero, linearAngle_t azAcuteObtuse, float azLimitAngle, float minAz, float minAlt, float maxAz, float maxAlt);
+void moveMachine(const float &preTargetAlt, const float &preTargetAz, const float &targetalt, const float &targetaz, const altAziAssy_t &assemblyType, machineType_t sunTrackerOrHelio, const float &altGearRatio, const float &altMotorDirection, const float &altb, const float &altc, const float &altAngleAtZero, const linearAngle_t &altAcuteObtuse, const float &altLimitAngle, const float &azGearRatio, const float &azMotorDirection, const float &azb, const float &azc, const float &azAngleAtZero, const linearAngle_t &azAcuteObtuse, const float &azLimitAngle, const float &minAz, const float &minAlt, const float &maxAz, const float &maxAlt);
 
 #endif

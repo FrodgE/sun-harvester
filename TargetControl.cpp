@@ -4,7 +4,7 @@
 
 #include <Arduino.h>
 
-void TargetControl(int second, int minute, int hour, int day, int month, int year, int dayOfWeek)
+void TargetControl(const int &second, const int &minute, const int &hour, const int &day, const int &month, const int &year, const int &dayOfWeek)
 {
     if (digitalRead(manualModeOnOffPin) != HIGH && FirstIterationAfterArduinoReset == true && joystickMode == false) {
         /////////////////////////////////////////////////////////////////////////////

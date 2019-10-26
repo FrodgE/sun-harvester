@@ -5,11 +5,11 @@
 
 #define DS1307_I2C_ADDRESS 0x68
 
-byte decToBcd(byte val);
-byte bcdToDec(byte val);
-void setDateDs1307(byte second, byte minute, byte hour, byte dayOfWeek, byte dayOfMonth, byte month, byte year);
+byte decToBcd(const byte &val);
+byte bcdToDec(const byte &val);
+void setDateDs1307(const byte &second, const byte &minute, const byte &hour, const byte &dayOfWeek, const byte &dayOfMonth, const byte &month, const byte &year);
 
-void CalculateSunsPositionLowAc(int month, int day, float hour, float minute, float second, float timezone, float latitude, float longitude, float& SunsAltitude, float& SunsAzimuth, float& delta, float& h)
+void CalculateSunsPositionLowAc(const int &month, const int &day, const float &hour, const float &minute, const float &second, const float &timezone, float latitude, float longitude, float &SunsAltitude, float &SunsAzimuth, float &delta, float &h)
 {
     int n;
     float pi = 3.14159265;
@@ -40,13 +40,13 @@ void CalculateSunsPositionLowAc(int month, int day, float hour, float minute, fl
 // ds1307 for it's full capabilities.
 
 // Convert normal decimal numbers to binary coded decimal
-byte decToBcd(byte val)
+byte decToBcd(const byte &val)
 {
     return ((val / 10 * 16) + (val % 10));
 }
 
 // Convert binary coded decimal to normal decimal numbers
-byte bcdToDec(byte val)
+byte bcdToDec(const byte &val)
 {
     return ((val / 16 * 10) + (val % 16));
 }
@@ -65,13 +65,13 @@ byte bcdToDec(byte val)
 // 2) Starts the clock
 // 3) Sets hour mode to 24 hour clock
 // Assumes you're passing in valid numbers
-void setDateDs1307(byte second, // 0-59
-    byte minute, // 0-59
-    byte hour, // 1-23
-    byte dayOfWeek, // 1-7
-    byte dayOfMonth, // 1-28/29/30/31
-    byte month, // 1-12
-    byte year) // 0-99
+void setDateDs1307(const byte &second, // 0-59
+    const byte &minute, // 0-59
+    const byte &hour, // 1-23
+    const byte &dayOfWeek, // 1-7
+    const byte &dayOfMonth, // 1-28/29/30/31
+    const byte &month, // 1-12
+    const byte &year) // 0-99
 {
     Wire.beginTransmission(DS1307_I2C_ADDRESS);
     Wire.write((byte)0);
@@ -112,7 +112,7 @@ void getDateDs1307(byte* second,
     *year = bcdToDec(Wire.read());
 }
 
-void printtime(int hour, int minute, int second, int month, int dayOfMonth, int year, int dayOfWeek)
+void printtime(const int &hour, const int &minute, const int &second, const int &month, const int &dayOfMonth, const int &year, const int &dayOfWeek)
 {
     Serial.print(hour, DEC);
     Serial.print(":");

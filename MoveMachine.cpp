@@ -5,11 +5,11 @@
 
 #include <Arduino.h>
 
-long GearRatioMoveMotor(altAz_t altOrAz, float MachinesPreviousAngle, float MachinesNewAngle, float GearRatio, float MotorDirection);
-void resetPositionOfMachine(altAziAssy_t assemblyType, float altMotorDirection, float altLimitAngle, float altGearRatio, float altb, float altc, linearAngle_t altAcuteObtuse, float altAngleAtZero, float azMotorDirection, float azLimitAngle, float azGearRatio, float azb, float azc, linearAngle_t azAcuteObtuse, float azAngleAtZero);
-void gearReductionReset(altAz_t altOrAz, float MotorDirection, float LimitAngle, float GearRatio);
+long GearRatioMoveMotor(const altAz_t &altOrAz, const float &MachinesPreviousAngle, const float &MachinesNewAngle, const float &GearRatio, const float &MotorDirection);
+void resetPositionOfMachine(const altAziAssy_t &assemblyType, const float &altMotorDirection, const float &altLimitAngle, const float &altGearRatio, const float &altb, const float &altc, const linearAngle_t &altAcuteObtuse, const float &altAngleAtZero, const float &azMotorDirection, const float &azLimitAngle, const float &azGearRatio, const float &azb, const float &azc, const linearAngle_t &azAcuteObtuse, const float &azAngleAtZero);
+void gearReductionReset(const altAz_t &altOrAz, const float &MotorDirection, const float &LimitAngle, const float &GearRatio);
 
-void moveMachine(float preTargetAlt, float preTargetAz, float targetalt, float targetaz, altAziAssy_t assemblyType, machineType_t sunTrackerOrHelio, float altGearRatio, float altMotorDirection, float altb, float altc, float altAngleAtZero, linearAngle_t altAcuteObtuse, float altLimitAngle, float azGearRatio, float azMotorDirection, float azb, float azc, float azAngleAtZero, linearAngle_t azAcuteObtuse, float azLimitAngle, float minAz, float minAlt, float maxAz, float maxAlt)
+void moveMachine(const float &preTargetAlt, const float &preTargetAz, const float &targetalt, const float &targetaz, const altAziAssy_t &assemblyType, machineType_t sunTrackerOrHelio, const float &altGearRatio, const float &altMotorDirection, const float &altb, const float &altc, const float &altAngleAtZero, const linearAngle_t &altAcuteObtuse, const float &altLimitAngle, const float &azGearRatio, const float &azMotorDirection, const float &azb, const float &azc, const float &azAngleAtZero, const linearAngle_t &azAcuteObtuse, const float &azLimitAngle, const float &minAz, const float &minAlt, const float &maxAz, const float &maxAlt)
 {
     if (digitalRead(HeliostatToSun) == HIGH) {
         sunTrackerOrHelio = SUN_TRACKER;
@@ -149,7 +149,7 @@ void moveMachine(float preTargetAlt, float preTargetAz, float targetalt, float t
 } //END MOVE MACHINE
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-long GearRatioMoveMotor(altAz_t altOrAz, float MachinesPreviousAngle, float MachinesNewAngle, float GearRatio, float MotorDirection)
+long GearRatioMoveMotor(const altAz_t &altOrAz, const float &MachinesPreviousAngle, const float &MachinesNewAngle, const float &GearRatio, const float &MotorDirection)
 {
     float NumberOfSteps;
     if (altOrAz == ALTITUDE) {
@@ -172,7 +172,7 @@ long GearRatioMoveMotor(altAz_t altOrAz, float MachinesPreviousAngle, float Mach
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-void resetPositionOfMachine(altAziAssy_t assemblyType, float altMotorDirection, float altLimitAngle, float altGearRatio, float altb, float altc, linearAngle_t altAcuteObtuse, float altAngleAtZero, float azMotorDirection, float azLimitAngle, float azGearRatio, float azb, float azc, linearAngle_t azAcuteObtuse, float azAngleAtZero)
+void resetPositionOfMachine(const altAziAssy_t &assemblyType, const float &altMotorDirection, const float &altLimitAngle, const float &altGearRatio, const float &altb, const float &altc, const linearAngle_t &altAcuteObtuse, const float &altAngleAtZero, const float &azMotorDirection, const float &azLimitAngle, const float &azGearRatio, const float &azb, const float &azc, const linearAngle_t &azAcuteObtuse, const float &azAngleAtZero)
 {
     if (assemblyType == ALT_GEAR_AZI_GEAR) { //Machine uses Gear Reduction System for both AZIMUTH and ALTITUDE
         gearReductionReset(AZIMUTH, azMotorDirection, azLimitAngle, azGearRatio);
@@ -199,7 +199,7 @@ void resetPositionOfMachine(altAziAssy_t assemblyType, float altMotorDirection, 
 } //END reset
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-void gearReductionReset(altAz_t altOrAz, float MotorDirection, float LimitAngle, float GearRatio)
+void gearReductionReset(const altAz_t &altOrAz, const float &MotorDirection, const float &LimitAngle, const float &GearRatio)
 {
     findLimits(altOrAz, MotorDirection, LimitAngle); //Seeks out limit switch
     float dif = positionAfterReset(LimitAngle) - LimitAngle;

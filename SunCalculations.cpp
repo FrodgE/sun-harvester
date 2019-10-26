@@ -3,25 +3,25 @@
 #include <BigNumber.h>
 #include <BigNumberMath.h>
 
-BigNumber findjd(int year, int month, int day, int timezone, int hour, int minute, int second);
-BigNumber TimeInJulianCenturies(BigNumber jd);
-BigNumber MeanEquinoxOfTheDate(BigNumber t);
-BigNumber MeanAnomalyOfTheSun(BigNumber t);
-BigNumber SunsEquationOfTheCenter(BigNumber m, BigNumber t);
-BigNumber SunsApparantLongitude(BigNumber t, BigNumber o);
-BigNumber ObliquityOfTheEcliptic(BigNumber t);
-BigNumber SunsDeclination(BigNumber epsilon, BigNumber lambda);
-BigNumber SunsRightAscension(BigNumber epsilon, BigNumber lambda);
-BigNumber SiderealTime(BigNumber t, BigNumber jd);
-BigNumber LocalHourAngle(BigNumber theta, BigNumber alpha, float longitude);
-void findAlt(float latitude, BigNumber delta, BigNumber h);
-void findAz(float latitude, BigNumber delta, BigNumber h);
-BigNumber findAzSubFunction(BigNumber latitude, BigNumber delta, BigNumber h);
-boolean region(BigNumber z);
-float bigNumberToFloat(BigNumber number);
-void printBignum(BigNumber& n);
+BigNumber findjd(int year, int month, const int &day, const int &timezone, const int &hour, const int &minute, const int &second);
+BigNumber TimeInJulianCenturies(const BigNumber &jd);
+BigNumber MeanEquinoxOfTheDate(const BigNumber &t);
+BigNumber MeanAnomalyOfTheSun(const BigNumber &t);
+BigNumber SunsEquationOfTheCenter(const BigNumber &m, const BigNumber &t);
+BigNumber SunsApparantLongitude(const BigNumber &t, const BigNumber &o);
+BigNumber ObliquityOfTheEcliptic(const BigNumber &t);
+BigNumber SunsDeclination(const BigNumber &epsilon, const BigNumber &lambda);
+BigNumber SunsRightAscension(const BigNumber &epsilon, const BigNumber &lambda);
+BigNumber SiderealTime(const BigNumber &t, const BigNumber &jd);
+BigNumber LocalHourAngle(const BigNumber &theta, const BigNumber &alpha, const float &longitude);
+void findAlt(const float &latitude, const BigNumber &delta, const BigNumber &h);
+void findAz(const float &latitude, const BigNumber &delta, const BigNumber &h);
+BigNumber findAzSubFunction(const BigNumber &latitude, const BigNumber &delta, const BigNumber &h);
+boolean region(const BigNumber &z);
+float bigNumberToFloat(const BigNumber &number);
+void printBignum(const BigNumber &n);
 
-void findSunsAltAndAzOne(int year, int month, int day, int timezone, int hour, int minute, int second, float latitude, float longitude)
+void findSunsAltAndAzOne(const int &year, const int &month, const int &day, const int &timezone, const int &hour, const int &minute, const int &second, const float &latitude, const float &longitude)
 {
     BigNumberMath::begin(calculationScale); // initialize library // sj
 
@@ -67,7 +67,7 @@ void findSunsAltAndAzOne(int year, int month, int day, int timezone, int hour, i
     BigNumberMath::finish(); // sj
 }
 
-BigNumber findjd(int year, int month, int day, int timezone, int hour, int minute, int second)
+BigNumber findjd(int year, int month, const int &day, const int &timezone, const int &hour, const int &minute, const int &second)
 {
     BigNumber v1, v2;
     char buf1[15];
@@ -89,7 +89,7 @@ BigNumber findjd(int year, int month, int day, int timezone, int hour, int minut
     return jd;
 }
 
-BigNumber TimeInJulianCenturies(BigNumber jd)
+BigNumber TimeInJulianCenturies(const BigNumber &jd)
 {
     // (Meeus Pages 163-164) vvv
     //Time in Julian Centuries
@@ -97,7 +97,7 @@ BigNumber TimeInJulianCenturies(BigNumber jd)
     return (t);
 }
 
-BigNumber MeanEquinoxOfTheDate(BigNumber t)
+BigNumber MeanEquinoxOfTheDate(const BigNumber &t)
 {
     BigNumber v1, v2, v4;
     //Mean equinox of the date
@@ -108,7 +108,7 @@ BigNumber MeanEquinoxOfTheDate(BigNumber t)
     return l;
 }
 
-BigNumber MeanAnomalyOfTheSun(BigNumber t)
+BigNumber MeanAnomalyOfTheSun(const BigNumber &t)
 {
     BigNumber v1, v2, v3, v4;
     //Mean Anomaly of the Sun
@@ -120,7 +120,7 @@ BigNumber MeanAnomalyOfTheSun(BigNumber t)
     return m;
 }
 
-BigNumber SunsEquationOfTheCenter(BigNumber m, BigNumber t)
+BigNumber SunsEquationOfTheCenter(const BigNumber &m, const BigNumber &t)
 {
     BigNumber v1, v2, v3, v4, v5, v6, v7, v8, v9;
     // Sun's Equation of the center
@@ -137,7 +137,7 @@ BigNumber SunsEquationOfTheCenter(BigNumber m, BigNumber t)
     return c;
 }
 
-BigNumber SunsApparantLongitude(BigNumber t, BigNumber o)
+BigNumber SunsApparantLongitude(const BigNumber &t, const BigNumber &o)
 {
     BigNumber v1, v2, v3;
     //Sun's Apparant Longitude (The Output of Lambda)
@@ -151,7 +151,7 @@ BigNumber SunsApparantLongitude(BigNumber t, BigNumber o)
     return lambda;
 }
 
-BigNumber ObliquityOfTheEcliptic(BigNumber t)
+BigNumber ObliquityOfTheEcliptic(const BigNumber &t)
 {
     BigNumber v1, v2, v3, v4, v5, v6;
     //Obliquity of the Ecliptic (Meeus page 147) (numbers switched from degree minute second in book to decimal degree)
@@ -168,7 +168,7 @@ BigNumber ObliquityOfTheEcliptic(BigNumber t)
     return epsilon;
 }
 
-BigNumber SunsDeclination(BigNumber epsilon, BigNumber lambda)
+BigNumber SunsDeclination(const BigNumber &epsilon, const BigNumber &lambda)
 {
     //Sun's Declination (Meeus page 165)
     char buf1[15];
@@ -194,7 +194,7 @@ BigNumber SunsDeclination(BigNumber epsilon, BigNumber lambda)
     return delta;
 }
 
-BigNumber SunsRightAscension(BigNumber epsilon, BigNumber lambda)
+BigNumber SunsRightAscension(const BigNumber &epsilon, const BigNumber &lambda)
 {
     BigNumber v1, v2, v3, v4;
     char buf1[15];
@@ -230,7 +230,7 @@ BigNumber SunsRightAscension(BigNumber epsilon, BigNumber lambda)
     return alpha;
 }
 
-BigNumber SiderealTime(BigNumber t, BigNumber jd)
+BigNumber SiderealTime(const BigNumber &t, const BigNumber &jd)
 {
     BigNumber v1, v2, v3, v4, v5, v6;
     //Sidereal Time (Meeus Page 88)
@@ -244,7 +244,7 @@ BigNumber SiderealTime(BigNumber t, BigNumber jd)
     return theta;
 }
 
-BigNumber LocalHourAngle(BigNumber theta, BigNumber alpha, float longitude)
+BigNumber LocalHourAngle(const BigNumber &theta, const BigNumber &alpha, const float &longitude)
 {
     char buf1[15];
     BigNumber v1, v3;
@@ -256,7 +256,7 @@ BigNumber LocalHourAngle(BigNumber theta, BigNumber alpha, float longitude)
     return h;
 }
 
-void findAlt(float latitude, BigNumber delta, BigNumber h)
+void findAlt(const float &latitude, const BigNumber &delta, const BigNumber &h)
 {
     BigNumber v1, v2, v3, v4, v5, v6, v7, altitude2;
     char buf1[15];
@@ -301,7 +301,7 @@ void findAlt(float latitude, BigNumber delta, BigNumber h)
     SunsAltitude = bigNumberToFloat(altitude2);
 }
 
-void findAz(float latitude, BigNumber delta, BigNumber h)
+void findAz(const float &latitude, const BigNumber &delta, const BigNumber &h)
 {
     BigNumber v1, v2, v3, v6, v7;
     //Local Horizontal Coordinates (Meeus Page 93)
@@ -328,7 +328,7 @@ void findAz(float latitude, BigNumber delta, BigNumber h)
     SunsAzimuth = bigNumberToFloat(v7);
 }
 
-BigNumber findAzSubFunction(BigNumber latitude, BigNumber delta, BigNumber h)
+BigNumber findAzSubFunction(const BigNumber &latitude, const BigNumber &delta, const BigNumber &h)
 {
     BigNumber v2, v3, v4, v5, v6, v7, v8;
     char buf1[15];
@@ -364,7 +364,7 @@ BigNumber findAzSubFunction(BigNumber latitude, BigNumber delta, BigNumber h)
 }
 
 // true if z \elem [Pi/2,3*Pi/2] + n*Pi
-boolean region(BigNumber z)
+boolean region(const BigNumber &z)
 {
     BigNumber n;
     BigNumberMath::setScale(0);
@@ -375,7 +375,7 @@ boolean region(BigNumber z)
     return false;
 }
 
-float bigNumberToFloat(BigNumber number)
+float bigNumberToFloat(const BigNumber &number)
 {
     char buf1[15];
     BigNumber num1, num5;
@@ -388,7 +388,7 @@ float bigNumberToFloat(BigNumber number)
 }
 
 // function to display a big number and free it afterwards
-void printBignum(BigNumber& n)
+void printBignum(const BigNumber &n)
 {
     char* s = n.toString();
     Serial.println(s);
