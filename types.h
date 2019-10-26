@@ -7,8 +7,7 @@ typedef enum
     ALT_GEAR_AZI_GEAR,
     ALT_LINEAR_AZI_LINEAR,
     ALT_LINEAR_AZI_GEAR,
-    ALT_GEAR_AZI_LINEAR,
-    ALT_LINEAR2_AZI_GEAR
+    ALT_GEAR_AZI_LINEAR
 } altAziAssy_t;
 
 // Setting #1
