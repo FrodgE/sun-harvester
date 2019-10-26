@@ -1,6 +1,5 @@
 #include "SunCalculations.h"
 #include "globals.h"
-#include <BigNumber.h>
 #include <BigNumberMath.h>
 
 BigNumber findjd(int year, int month, const int &day, const int &timezone, const int &hour, const int &minute, const int &second);
@@ -14,14 +13,24 @@ BigNumber SunsDeclination(const BigNumber &epsilon, const BigNumber &lambda);
 BigNumber SunsRightAscension(const BigNumber &epsilon, const BigNumber &lambda);
 BigNumber SiderealTime(const BigNumber &t, const BigNumber &jd);
 BigNumber LocalHourAngle(const BigNumber &theta, const BigNumber &alpha, const float &longitude);
-void findAlt(const float &latitude, const BigNumber &delta, const BigNumber &h);
-void findAz(const float &latitude, const BigNumber &delta, const BigNumber &h);
+void findAlt(const BigNumber &latitude, const BigNumber &delta, const BigNumber &h);
+void findAz(const BigNumber &latitude, const BigNumber &delta, const BigNumber &h);
 BigNumber findAzSubFunction(const BigNumber &latitude, const BigNumber &delta, const BigNumber &h);
 boolean region(const BigNumber &z);
 float bigNumberToFloat(const BigNumber &number);
 void printBignum(const BigNumber &n);
 
 void findSunsAltAndAzOne(const int &year, const int &month, const int &day, const int &timezone, const int &hour, const int &minute, const int &second, const float &latitude, const float &longitude)
+{
+    char buf1[15];
+    BigNumber bigLat, bigLong;
+    bigLat = dtostrf(latitude, 5, 5, buf1);
+    bigLong = dtostrf(longitude, 5, 5, buf1);
+
+    findSunsAltAndAzOne(year, month, day, timezone, hour, minute, second, bigLat, bigLong);
+}
+
+void findSunsAltAndAzOne(const int &year, const int &month, const int &day, const int &timezone, const int &hour, const int &minute, const int &second, const BigNumber &latitude, const BigNumber &longitude)
 {
     BigNumberMath::begin(calculationScale); // initialize library // sj
 
@@ -256,11 +265,12 @@ BigNumber LocalHourAngle(const BigNumber &theta, const BigNumber &alpha, const f
     return h;
 }
 
-void findAlt(const float &latitude, const BigNumber &delta, const BigNumber &h)
+void findAlt(const BigNumber &latitude, const BigNumber &delta, const BigNumber &h)
 {
     BigNumber v1, v2, v3, v4, v5, v6, v7, altitude2;
     char buf1[15];
-    v6 = dtostrf(latitude, 5, 5, buf1);
+    v6 = latitude;
+
     //Local Horizontal Coordinates (Meeus Page 93)
     if (calculationSpeed == FAST_INACCURATE) {
         v1 = dtostrf(sin(bigNumberToFloat(BigNumberMath::to_BigRad(v6))), 5, 5, buf1); // sj
@@ -301,12 +311,13 @@ void findAlt(const float &latitude, const BigNumber &delta, const BigNumber &h)
     SunsAltitude = bigNumberToFloat(altitude2);
 }
 
-void findAz(const float &latitude, const BigNumber &delta, const BigNumber &h)
+void findAz(const BigNumber &latitude, const BigNumber &delta, const BigNumber &h)
 {
     BigNumber v1, v2, v3, v6, v7;
     //Local Horizontal Coordinates (Meeus Page 93)
     char buf1[15];
-    v6 = dtostrf(latitude, 5, 5, buf1);
+    v6 = latitude;
+
     if (calculationSpeed == FAST_INACCURATE) {
         v1 = dtostrf(sin(bigNumberToFloat(BigNumberMath::to_BigRad(h))), 5, 5, buf1); // sj
     }
@@ -377,14 +388,12 @@ boolean region(const BigNumber &z)
 
 float bigNumberToFloat(const BigNumber &number)
 {
-    char buf1[15];
-    BigNumber num1, num5;
-    long num3, num4;
-    num3 = (long)(number);
-    num5 = dtostrf(num3, 5, 5, buf1);
-    num1 = (number - num5) * BigNumber(10000.0);
-    num4 = (long)num1;
-    return (float)num3 + (((float)(num4)) / 10000.0);
+    char* temp;
+    float val;
+    temp = number.toString();
+    val = strtod(temp, NULL);
+    free(temp);
+    return val;
 }
 
 // function to display a big number and free it afterwards

@@ -14,10 +14,12 @@
 #include "globals.h"
 
 #include <Wire.h>
+#include <BigNumber.h>
 
 //PUT YOUR LATITUDE, LONGITUDE, AND TIME ZONE HERE
-float latitude = 39.19;
-float longitude = -78.16;
+// Use strings so the "BigNumber" library can be used to avoid loss of precision
+const char latitude[] = "39.19";
+const char longitude[] = "-78.16";
 float timezone = -5;
 
 //If you live in the northern hemisphere, put false here. If you live in the southern hemisphere put true.
@@ -195,6 +197,9 @@ void setup()
 {
     Wire.begin();
     Serial.begin(9600);
+
+    // Initialise "BigNumber" library and set precision
+    BigNumber::begin(calculationScale);
 
     ////////////////////////////////
     //TWO WIRE STEP/DIR DRIVER BOARD CODE
