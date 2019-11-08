@@ -3,7 +3,6 @@
 #include "types.h"
 #include "globals.h"
 
-#include <Arduino.h>
 
 void ManualControlThroughJoystick();
 

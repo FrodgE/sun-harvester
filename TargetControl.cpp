@@ -2,7 +2,6 @@
 #include "Functions.h"
 #include "globals.h"
 
-#include <Arduino.h>
 
 void TargetControl(int second, int minute, int hour, int day, int month, int year, int dayOfWeek)
 {

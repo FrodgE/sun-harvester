@@ -2,7 +2,8 @@
 #define globals_h
 
 #include "types.h"
-#include "arduino.h"
+
+#include <Arduino.h>
 
 //Put how many machines you want to control here
 #define numberOfMachines 1
