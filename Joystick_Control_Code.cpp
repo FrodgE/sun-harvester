@@ -7,8 +7,13 @@
 
 void ManualControlThroughJoystick();
 
+float UDCenter, LRCenter;
+
 void checkJoystick()
 {
+    static int manualMachineNumber = 0;
+    static bool joystickTriggerOnce = false;
+
     if (digitalRead(plusOneButton) == HIGH && digitalRead(minusOneButton) == HIGH && joystickMode == false && joystickTriggerOnce == false) {
         joystickMode = true;
         joystickTriggerOnce = true;

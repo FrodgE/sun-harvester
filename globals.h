@@ -9,7 +9,6 @@
 
 extern bool FirstIterationAfterArduinoReset;
 extern bool joystickMode;
-extern bool joystickTriggerOnce;
 extern bool justFinishedManualControl;
 extern bool potentiometerIsConnected;
 
@@ -25,7 +24,6 @@ extern int iterationsAfterReset;
 extern int joystickLRAnalogPin;
 extern int joystickUDAnalogPin;
 extern int machineNumber;
-extern int manualMachineNumber;
 extern int minusOneButton;
 extern int plusOneButton;
 extern int targetsUsed;
@@ -51,7 +49,6 @@ extern float azManualSpeedSwap;
 extern float azMove;
 extern float azResetSpeed;
 extern float azSpeed;
-extern float LRCenter;
 extern float machineAltParkAngle;
 extern float machineAzParkAngle;
 extern float moveAwayFromLimit;
@@ -59,7 +56,6 @@ extern float pi;
 extern float steps;
 extern float SunsAltitude;
 extern float SunsAzimuth;
-extern float UDCenter;
 
 extern float altLeftoverSteps[];
 extern float azLeftoverSteps[];
@@ -68,7 +64,6 @@ extern float MachinesPrevAz[];
 extern float MachineTargetAlt[];
 extern float MachineTargetAz[];
 
-extern const PROGMEM int HourAngleArray[];
 extern const float MachineSettings[][20] PROGMEM;
 
 extern activeHighLow_t enableHIGHorLOW;
