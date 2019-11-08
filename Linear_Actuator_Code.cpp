@@ -17,7 +17,7 @@ float leadscrewLength(const float &b, const float &c, const linearAngle_t &Acute
     if (AcuteObtuse == OBTUSE) {
         angle = AngleAtZero + angle;
     }
-    output = sqrt(b * b + c * c - 2 * b * c * cos((angle)*pi / 180));
+    output = sqrt(b * b + c * c - 2 * b * c * cos((angle)*PI / 180));
     return output;
 }
 

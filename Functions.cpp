@@ -195,12 +195,12 @@ void FindHeliostatAltAndAz(const float &SunsAltitude, const float &SunsAzimuth, 
 
 float to_rad(const float &angle)
 {
-    return angle * (pi / 180);
+    return angle * (PI / 180);
 }
 
 float to_deg(const float &angle)
 {
-    return angle * (180 / pi);
+    return angle * (180 / PI);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

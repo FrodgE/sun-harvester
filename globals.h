@@ -55,7 +55,6 @@ extern float LRCenter;
 extern float machineAltParkAngle;
 extern float machineAzParkAngle;
 extern float moveAwayFromLimit;
-extern float pi;
 extern float steps;
 extern float SunsAltitude;
 extern float SunsAzimuth;

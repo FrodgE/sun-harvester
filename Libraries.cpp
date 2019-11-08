@@ -12,19 +12,18 @@ void setDateDs1307(const byte &second, const byte &minute, const byte &hour, con
 void CalculateSunsPositionLowAc(const int &month, const int &day, const float &hour, const float &minute, const float &second, const float &timezone, float latitude, float longitude, float &SunsAltitude, float &SunsAzimuth, float &delta, float &h)
 {
     int n;
-    float pi = 3.14159265;
-    latitude = latitude * pi / 180;
+    latitude = latitude * PI / 180;
     int dayNumArray[12] = { 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334 }; //Turns the month into the number of days since the beginning of the year.
     n = dayNumArray[month - 1] + day - 1;
     h = (float(pgm_read_word_near(HourAngleArray + n)) / 1000);
     h = h + longitude + (timezone * -1 * 15);
-    h = ((((hour + minute / 60 + second / 3600) - 12) * 15) + h) * pi / 180;
-    float y = (((2 * pi) / 365) * (n - 1));
+    h = ((((hour + minute / 60 + second / 3600) - 12) * 15) + h) * PI / 180;
+    float y = (((2 * PI) / 365) * (n - 1));
     delta = (0.006918 - 0.399912 * cos(y) + 0.070257 * sin(y) - 0.006758 * cos(2 * y) + 0.000907 * sin(2 * y) - 0.002697 * cos(3 * y) + 0.00148 * sin(3 * y));
-    SunsAltitude = (asin(sin(latitude) * sin(delta) + cos(latitude) * cos(delta) * cos(h))) * 180 / pi;
-    SunsAzimuth = (((atan2((sin(h)), ((cos(h) * sin(latitude)) - tan(delta) * cos(latitude))))) * 180 / pi);
-    delta = delta * (180 / pi);
-    h = h * (180 / pi);
+    SunsAltitude = (asin(sin(latitude) * sin(delta) + cos(latitude) * cos(delta) * cos(h))) * 180 / PI;
+    SunsAzimuth = (((atan2((sin(h)), ((cos(h) * sin(latitude)) - tan(delta) * cos(latitude))))) * 180 / PI);
+    delta = delta * (180 / PI);
+    h = h * (180 / PI);
 }
 
 /////////////////////////////////////

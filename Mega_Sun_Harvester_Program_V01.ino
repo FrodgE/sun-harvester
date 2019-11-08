@@ -141,7 +141,7 @@ calculationSpeed_t calculationSpeed = SLOW_ACCURATE; // 0 for slow, 1 for fast (
 ///////////////////////////////////////////////////////////
 //MISC. VARIABLES USED THROUGHOUT THE PROGRAM
 ///////////////////////////////////////////////////////////
-float pi = 3.14159265, SunsAltitude, SunsAzimuth, h, delta;
+float SunsAltitude, SunsAzimuth, h, delta;
 //float helioaltdif, helioazdif, prehelioalt, prehelioaz, helioalt, helioaz;
 //float preAlt = 0, preAz = 0, altdif, azdif;
 int iterationsAfterReset, preTargetsUsed, machineNumber, windToggleCount, midCycle;
@@ -302,7 +302,7 @@ void loop()
 
         //SunPositionAlgo_LowAc::CalculateSunsPositionLowAc(month, day, hour, minute, second, timezone, latitude, longitude, SunsAltitude, SunsAzimuth, delta, h);
         findSunsAltAndAzOne(year, month, day, timezone, hour, minute, second, latitude, longitude);
-        SunsAltitude = SunsAltitude + (1.02 / tan((SunsAltitude + 10.3 / (SunsAltitude + 5.11)) * pi / 180.0)) / 60.0; //Refraction Compensation: Meeus Pg. 105
+        SunsAltitude = SunsAltitude + (1.02 / tan((SunsAltitude + 10.3 / (SunsAltitude + 5.11)) * PI / 180.0)) / 60.0; //Refraction Compensation: Meeus Pg. 105
 
         if (useNorthAsZero == true) {
             if (SunsAzimuth < 0) {
