@@ -216,26 +216,26 @@ void loop()
 
         moveMachine(PrevAltTargetsArray[machineNumber], PrevAzTargetsArray[machineNumber],
             MachineTargetAlt[machineNumber], MachineTargetAz[machineNumber],
-            altAziAssy_t(pgm_read_float(&MachineSettings[machineNumber][0])),
-            machineType_t(pgm_read_float(&MachineSettings[machineNumber][1])),
-            float(pgm_read_float(&MachineSettings[machineNumber][2])),
-            float(pgm_read_float(&MachineSettings[machineNumber][3])),
-            float(pgm_read_float(&MachineSettings[machineNumber][4])),
-            float(pgm_read_float(&MachineSettings[machineNumber][5])),
-            float(pgm_read_float(&MachineSettings[machineNumber][6])),
-            linearAngle_t(pgm_read_float(&MachineSettings[machineNumber][7])),
-            float(pgm_read_float(&MachineSettings[machineNumber][8])),
-            float(pgm_read_float(&MachineSettings[machineNumber][9])),
-            float(pgm_read_float(&MachineSettings[machineNumber][10])),
-            float(pgm_read_float(&MachineSettings[machineNumber][11])),
-            float(pgm_read_float(&MachineSettings[machineNumber][12])),
-            float(pgm_read_float(&MachineSettings[machineNumber][13])),
-            linearAngle_t(pgm_read_float(&MachineSettings[machineNumber][14])),
-            float(pgm_read_float(&MachineSettings[machineNumber][15])),
-            float(pgm_read_float(&MachineSettings[machineNumber][16])),
-            float(pgm_read_float(&MachineSettings[machineNumber][17])),
-            float(pgm_read_float(&MachineSettings[machineNumber][18])),
-            float(pgm_read_float(&MachineSettings[machineNumber][19])));
+            altAziAssy_t(pgm_read_float(&MachineSettings[machineNumber][0])),   // assemblyType
+            machineType_t(pgm_read_float(&MachineSettings[machineNumber][1])),  // sunTrackerOrHelio
+            float(pgm_read_float(&MachineSettings[machineNumber][2])),          // altGearRatio
+            float(pgm_read_float(&MachineSettings[machineNumber][3])),          // altMotorDirection
+            float(pgm_read_float(&MachineSettings[machineNumber][4])),          // altb
+            float(pgm_read_float(&MachineSettings[machineNumber][5])),          // altc
+            float(pgm_read_float(&MachineSettings[machineNumber][6])),          // altAngleAtZero
+            linearAngle_t(pgm_read_float(&MachineSettings[machineNumber][7])),  // altAcuteObtuse
+            float(pgm_read_float(&MachineSettings[machineNumber][8])),          // altLimitAngle
+            float(pgm_read_float(&MachineSettings[machineNumber][9])),          // azGearRatio
+            float(pgm_read_float(&MachineSettings[machineNumber][10])),         // azMotorDirection
+            float(pgm_read_float(&MachineSettings[machineNumber][11])),         // azb
+            float(pgm_read_float(&MachineSettings[machineNumber][12])),         // azc
+            float(pgm_read_float(&MachineSettings[machineNumber][13])),         // azAngleAtZero
+            linearAngle_t(pgm_read_float(&MachineSettings[machineNumber][14])), // azAcuteObtuse
+            float(pgm_read_float(&MachineSettings[machineNumber][15])),         // azLimitAngle
+            float(pgm_read_float(&MachineSettings[machineNumber][16])),         // minAz
+            float(pgm_read_float(&MachineSettings[machineNumber][17])),         // minAlt
+            float(pgm_read_float(&MachineSettings[machineNumber][18])),         // maxAz
+            float(pgm_read_float(&MachineSettings[machineNumber][19])));        // maxAlt
 
         PrevAltTargetsArray[machineNumber] = MachineTargetAlt[machineNumber];
         PrevAzTargetsArray[machineNumber] = MachineTargetAz[machineNumber];
