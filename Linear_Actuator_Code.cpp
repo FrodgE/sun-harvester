@@ -2,7 +2,6 @@
 #include "Functions.h"
 #include "globals.h"
 
-#include <Arduino.h>
 
 float leadscrewLength(const float &b, const float &c, const linearAngle_t &AcuteObtuse, float angle, const float &AngleAtZero);
 

@@ -3,7 +3,6 @@
 #include "Linear_Actuator_Code.h"
 #include "globals.h"
 
-#include <Arduino.h>
 
 long GearRatioMoveMotor(const altAz_t &altOrAz, const float &MachinesPreviousAngle, const float &MachinesNewAngle, const float &GearRatio, const float &MotorDirection);
 void resetPositionOfMachine(const altAziAssy_t &assemblyType, const float &altMotorDirection, const float &altLimitAngle, const float &altGearRatio, const float &altb, const float &altc, const linearAngle_t &altAcuteObtuse, const float &altAngleAtZero, const float &azMotorDirection, const float &azLimitAngle, const float &azGearRatio, const float &azb, const float &azc, const linearAngle_t &azAcuteObtuse, const float &azAngleAtZero);

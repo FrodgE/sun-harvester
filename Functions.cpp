@@ -2,7 +2,6 @@
 #include "Joystick_Control_Code.h"
 #include "globals.h"
 
-#include <Arduino.h>
 #include <EEPROM.h>
 #include <Wire.h>
 
