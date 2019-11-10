@@ -6,73 +6,73 @@
 // Use strings so the "BigNumber" library can be used to avoid loss of precision
 const char latitude[] = "39.19";
 const char longitude[] = "-78.16";
-float timezone = -5;
+const float timezone = -5;
 
 //If you live in the northern hemisphere, put false here. If you live in the southern hemisphere put true.
-bool useNorthAsZero = false;
+const bool useNorthAsZero = false;
 
 //INTERVAL BETWEEN MACHINE POSITION UPDATES
 //Lets the program know how often to update the position of the machine(s) (in seconds)
-unsigned long updateEvery = 30; //seconds
+const unsigned long updateEvery = 30; //seconds
 
 //TIME MACHINE(S) RESET
 //Put the hour you want your solar machines to reset on
 //their limit switches here. Remember that daylight saving time is not used, so the
 //hour it resets won't necessarily match the clock in your home.
-int hourReset = 21;
+const int hourReset = 21;
 
 //DEGREES TO MOVE OFF OF LIMIT SWITCHES
 //Tells the program how many degrees to move off of limit switches after they have been triggered.
 //Choose a positive number.
-float moveAwayFromLimit = 5;
+const float moveAwayFromLimit = 5;
 
 //Machine Wind Protection Park Angle
-float machineAltParkAngle = 65;
-float machineAzParkAngle = 0;
+const float machineAltParkAngle = 65;
+const float machineAzParkAngle = 0;
 
 //Put false here if you have not connected the target changer potentiometer to the circuit. Put true here if it is connected.
-bool potentiometerIsConnected = true;
+const bool potentiometerIsConnected = true;
 
 // STEPPER MOTOR SETUP
 //The number of steps required for your stepper to make one revolution. (Don't forget to take into
 //account the settings on your driver board. i.e. Microstepping, half stepping etc.)
-float steps = 800;
-//float steps = 1600;
+const float steps = 800;
+//const float steps = 1600;
 //Set the travel speed for your stepper motors here (Roughly in Rev/Min)
-float altSpeed = 40;
-float azSpeed = 40;
+const float altSpeed = 40;
+const float azSpeed = 40;
 //Set the speed the motors travel when they reset here (Roughly in Rev/Min)
 //Note: Max reset speed is limited since checking to see if the limit has been triggered slows things down.
 //The result of which means that the alt/az reset speeds may seem noticably slower than normal travel speed.
-float altResetSpeed = 40;
-float azResetSpeed = 40;
+const float altResetSpeed = 40;
+const float azResetSpeed = 40;
 //Speed of Stepper Motors when using manual control through joystick
 float altManualSpeed = 40;
 float azManualSpeed = 40;
 //enable on HIGH or LOW
 //Put a 0 here if your driver boards enable the stepper motors when the enable pin is written LOW.
 //Put a 1 here if your driver boards enable the stepper motors when the enable pin is written HIGH.
-activeHighLow_t enableHIGHorLOW = ACTIVE_LOW;
+const activeHighLow_t enableHIGHorLOW = ACTIVE_LOW;
 
 //Number of seconds (roughly) to accelerate to full speed.
-float altAccel = 1;
-float azAccel = 1;
+const float altAccel = 1;
+const float azAccel = 1;
 //the maximum number of steps the machine(s) will take when resetting
-long altitudeMax = 1000000;
-long azimuthMax = 1000000;
+const long altitudeMax = 1000000;
+const long azimuthMax = 1000000;
 
 ///////////////////////////////////////////////////////////
 //PIN ASSIGNMENT
 ///////////////////////////////////////////////////////////
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //TWO WIRE STEP/DIR DRIVER BOARD Pin Assignment
-int azimuthStepPin = 2;
-int azimuthDirPin = 3;
+const int azimuthStepPin = 2;
+const int azimuthDirPin = 3;
 
-int altitudeStepPin = 4;
-int altitudeDirPin = 5;
+const int altitudeStepPin = 4;
+const int altitudeDirPin = 5;
 
-int EnablePin = 6;
+const int EnablePin = 6;
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 //Limit Switch Pin Assignment
@@ -87,14 +87,14 @@ const int WindProtectionSwitch = 10;
 const int HeliostatToSun = 9;
 
 //Joystick Up Down and Left Right pins.
-int joystickUDAnalogPin = A0;
-int joystickLRAnalogPin = A1;
-int invertUD = -1; //Change value from 1 to -1 to invert up/down during joystick control
-int invertLR = -1; //Change value from 1 to -1 to invert left/right during joystick control
+const int joystickUDAnalogPin = A0;
+const int joystickLRAnalogPin = A1;
+const int invertUD = -1; //Change value from 1 to -1 to invert up/down during joystick control
+const int invertLR = -1; //Change value from 1 to -1 to invert left/right during joystick control
 
 //Select machine to manually control through joystick button pins
-int plusOneButton = 11;
-int minusOneButton = 12;
+const int plusOneButton = 11;
+const int minusOneButton = 12;
 
 
 //Open the "ReadMe" file that was downloaded with this program to see what each of these settings do.

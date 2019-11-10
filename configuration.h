@@ -11,47 +11,47 @@
 
 extern const char latitude[];
 extern const char longitude[];
-extern bool useNorthAsZero;
-extern float timezone;
-extern unsigned long updateEvery;
-extern int hourReset;
+extern const bool useNorthAsZero;
+extern const float timezone;
+extern const unsigned long updateEvery;
+extern const int hourReset;
 
-extern float moveAwayFromLimit;
-extern float machineAltParkAngle;
-extern float machineAzParkAngle;
+extern const float moveAwayFromLimit;
+extern const float machineAltParkAngle;
+extern const float machineAzParkAngle;
 
-extern bool potentiometerIsConnected;
+extern const bool potentiometerIsConnected;
 
-extern float steps;
-extern float altSpeed;
-extern float azSpeed;
-extern float altResetSpeed;
-extern float azResetSpeed;
+extern const float steps;
+extern const float altSpeed;
+extern const float azSpeed;
+extern const float altResetSpeed;
+extern const float azResetSpeed;
 extern float altManualSpeed;
 extern float azManualSpeed;
-extern activeHighLow_t enableHIGHorLOW;
+extern const activeHighLow_t enableHIGHorLOW;
 
-extern float altAccel;
-extern float azAccel;
-extern long altitudeMax;
-extern long azimuthMax;
+extern const float altAccel;
+extern const float azAccel;
+extern const long altitudeMax;
+extern const long azimuthMax;
 
-extern int azimuthStepPin;
-extern int azimuthDirPin;
-extern int altitudeStepPin;
-extern int altitudeDirPin;
-extern int EnablePin;
+extern const int azimuthStepPin;
+extern const int azimuthDirPin;
+extern const int altitudeStepPin;
+extern const int altitudeDirPin;
+extern const int EnablePin;
 extern const int altLimitPin;
 extern const int azLimitPin;
 extern const int manualModeOnOffPin;
 extern const int WindProtectionSwitch;
 extern const int HeliostatToSun;
-extern int joystickUDAnalogPin;
-extern int joystickLRAnalogPin;
-extern int invertUD;
-extern int invertLR;
-extern int plusOneButton;
-extern int minusOneButton;
+extern const int joystickUDAnalogPin;
+extern const int joystickLRAnalogPin;
+extern const int invertUD;
+extern const int invertLR;
+extern const int plusOneButton;
+extern const int minusOneButton;
 
 extern const float MachineSettings[][20] PROGMEM;
 
