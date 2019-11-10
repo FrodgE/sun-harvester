@@ -46,14 +46,14 @@ bool FirstIterationAfterArduinoReset = false, joystickMode, justFinishedManualCo
 ///////////////////////////////////////////////////////////
 //MISC. ARRAYS
 ///////////////////////////////////////////////////////////
-float PrevAltTargetsArray[numberOfMachines];
-float PrevAzTargetsArray[numberOfMachines];
-float altLeftoverSteps[numberOfMachines];
-float azLeftoverSteps[numberOfMachines];
-float MachineTargetAlt[numberOfMachines];
-float MachineTargetAz[numberOfMachines];
-float MachinesPrevAlt[numberOfMachines];
-float MachinesPrevAz[numberOfMachines];
+float PrevAltTargetsArray[numberOfMachines] = {};
+float PrevAzTargetsArray[numberOfMachines] = {};
+float altLeftoverSteps[numberOfMachines] = {};
+float azLeftoverSteps[numberOfMachines] = {};
+float MachineTargetAlt[numberOfMachines] = {};
+float MachineTargetAz[numberOfMachines] = {};
+float MachinesPrevAlt[numberOfMachines] = {};
+float MachinesPrevAz[numberOfMachines] = {};
 ///////////////////////////////////////////////////////////
 //END MISC. ARRAYS
 ///////////////////////////////////////////////////////////

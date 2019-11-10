@@ -123,7 +123,7 @@ void findLimits(const altAz_t &altOrAz, const int &motorDirection, const float &
 
 void searchForLimit(const float &limitAngle, const int &DirPin, const int &stepPin, const int &ResetSpeed, const int &LimitPin, const long &maxResetSteps, const int &motorDirection)
 {
-    long x;
+    long x = 0;
     int whichDir;
     if (motorDirection != 0) { //A motorDirection of 0 will skip the reset
         if (abs(limitAngle) != limitAngle) {
