@@ -243,8 +243,8 @@ void ManualControlThroughSerial()
     //&&(digitalRead(PinToMoveAzInPositiveDir)!=HIGH)&&(digitalRead(PinToMoveAzInNegativeDir)!=HIGH)){
     int machineNumberInput;
     if (numberOfMachines > 1) {
-        Serial.println("Manual Mode Active:");
-        Serial.println("Type Machine Number:");
+        Serial.println(F("Manual Mode Active:"));
+        Serial.println(F("Type Machine Number:"));
         machineNumberInput = (int)getFloatFromSerialMonitor();
         Serial.println(machineNumberInput);
     } else {
@@ -252,18 +252,18 @@ void ManualControlThroughSerial()
     }
 
     if (machineType_t(pgm_read_float(&MachineSettings[machineNumberInput][1])) == SUN_TRACKER || digitalRead(HeliostatToSun) == HIGH) { //MANUAL CONTROL OF SUN TRACKER
-        Serial.println("Machine's Current Altitude:");
+        Serial.println(F("Machine's Current Altitude:"));
         Serial.println(MachinesPrevAlt[machineNumberInput], 4);
-        Serial.println("Machine's Current Azimuth:");
+        Serial.println(F("Machine's Current Azimuth:"));
         Serial.println(MachinesPrevAz[machineNumberInput], 4);
-        Serial.println("Input Altitude:");
+        Serial.println(F("Input Altitude:"));
         newAlt = getFloatFromSerialMonitor();
         Serial.println(newAlt, 4);
-        Serial.println("Input Azimuth:");
+        Serial.println(F("Input Azimuth:"));
         newAz = getFloatFromSerialMonitor();
         Serial.println(newAz, 4);
 
-        Serial.println("Begin Move? Yes=1, No=0");
+        Serial.println(F("Begin Move? Yes=1, No=0"));
         int yesOrNo = getFloatFromSerialMonitor();
         Serial.println(yesOrNo);
         if (yesOrNo == 1) {
@@ -272,18 +272,18 @@ void ManualControlThroughSerial()
         }
     } //END MANUAL CONTROL OF SUN TRACKER
     else { //Manual Control Of Heliostat Targets
-        Serial.println("Target's Current Alt:");
+        Serial.println(F("Target's Current Alt:"));
         Serial.println(MachineTargetAlt[machineNumberInput], 4);
-        Serial.println("Target's Current Az:");
+        Serial.println(F("Target's Current Az:"));
         Serial.println(MachineTargetAz[machineNumberInput], 4);
-        Serial.println("Input Target's New Alt:");
+        Serial.println(F("Input Target's New Alt:"));
         newTargetAlt = getFloatFromSerialMonitor();
         Serial.println(newTargetAlt, 4);
-        Serial.println("Input Target's New Az:");
+        Serial.println(F("Input Target's New Az:"));
         newTargetAz = getFloatFromSerialMonitor();
         Serial.println(newTargetAz, 4);
 
-        Serial.println("Begin Move? Yes=1, No=0");
+        Serial.println(F("Begin Move? Yes=1, No=0"));
         int yesOrNo = getFloatFromSerialMonitor();
         Serial.println(yesOrNo);
         if (yesOrNo == 1) {

@@ -16,7 +16,7 @@ void moveMachine(const float &preTargetAlt, const float &preTargetAz, const floa
 
     if ((iterationsAfterReset == 0) || (FirstIterationAfterArduinoReset == false)) { //Machine Resets Position
         if ((digitalRead(WindProtectionSwitch) != HIGH)) {
-            Serial.println("Resetting");
+            Serial.println(F("Resetting"));
             MachineOn(machineNumber);
             resetPositionOfMachine(assemblyType, altMotorDirection, altLimitAngle, altGearRatio, altb, altc, altAcuteObtuse, altAngleAtZero,
                 azMotorDirection, azLimitAngle, azGearRatio, azb, azc, azAcuteObtuse, azAngleAtZero);
@@ -81,25 +81,25 @@ void moveMachine(const float &preTargetAlt, const float &preTargetAz, const floa
                         MachineOn(machineNumber);
                     }
 
-                    Serial.print("Machine Number ");
+                    Serial.print(F("Machine Number "));
                     Serial.println(machineNumber);
 
-                    Serial.print("Current Target Group: ");
+                    Serial.print(F("Current Target Group: "));
                     Serial.println(targetsUsed);
 
                     if (joystickMode == false) {
                         if (sunTrackerOrHelio == HELIOSTAT) { //Machine Acts as Heliostat
                             if (FirstIterationAfterArduinoReset == true) {
-                                Serial.print("Target's Alt: ");
+                                Serial.print(F("Target's Alt: "));
                                 Serial.println(MachineTargetAlt[machineNumber], 3);
-                                Serial.print("Target's Az: ");
+                                Serial.print(F("Target's Az: "));
                                 Serial.println(MachineTargetAz[machineNumber], 3);
                             }
                         }
 
-                        Serial.print("Machine's Alt: ");
+                        Serial.print(F("Machine's Alt: "));
                         Serial.println(MachinesNewAltitude, 3);
-                        Serial.print("Machine's Az: ");
+                        Serial.print(F("Machine's Az: "));
                         Serial.println(MachinesNewAzimuth, 3);
                     }
 
@@ -110,23 +110,23 @@ void moveMachine(const float &preTargetAlt, const float &preTargetAz, const floa
                 MachinesPrevAz[machineNumber] = MachinesNewAzimuth;
             } //if (iterationsAfterReset > 1)
         } else {
-            Serial.print("Machine Number ");
+            Serial.print(F("Machine Number "));
             Serial.println(machineNumber);
-            Serial.println("Move exceeds bounds");
+            Serial.println(F("Move exceeds bounds"));
             if ((MachinesNewAzimuth <= minAz) || (MachinesNewAzimuth >= maxAz)) {
-                Serial.print("Attempted azimuth ");
+                Serial.print(F("Attempted azimuth "));
                 Serial.println(MachinesNewAzimuth);
-                Serial.print("Machine minimum azimuth ");
+                Serial.print(F("Machine minimum azimuth "));
                 Serial.println(minAz);
-                Serial.print("Machine maximum azimuth ");
+                Serial.print(F("Machine maximum azimuth "));
                 Serial.println(maxAz);
             }
             if ((MachinesNewAltitude <= minAlt) || (MachinesNewAltitude >= maxAlt)) {
-                Serial.print("Attempted altitude ");
+                Serial.print(F("Attempted altitude "));
                 Serial.println(MachinesNewAltitude);
-                Serial.print("Machine minimum altitude ");
+                Serial.print(F("Machine minimum altitude "));
                 Serial.println(minAlt);
-                Serial.print("Machine maximum altitude ");
+                Serial.print(F("Machine maximum altitude "));
                 Serial.println(maxAlt);
             }
             if (joystickMode == true) {
@@ -194,7 +194,7 @@ void resetPositionOfMachine(const altAziAssy_t &assemblyType, const float &altMo
     }
     MachinesPrevAlt[machineNumber] = positionAfterReset(altLimitAngle);
     MachinesPrevAz[machineNumber] = positionAfterReset(azLimitAngle);
-    //Serial.println("Reset Finished");
+    //Serial.println(F("Reset Finished"));
 } //END reset
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

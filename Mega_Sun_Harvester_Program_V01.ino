@@ -149,13 +149,13 @@ void loop()
     //  month = 6;
     //  day = 9;
     //  for (float hour=8; hour <= 21; hour++){
-    ////  Serial.print("Hour ");
+    ////  Serial.print(F("Hour "));
     ////  Serial.println(hour);
     ////  Serial.println(TotalAltSteps);
     ////  Serial.println(TotalAzSteps);
     //    for (float minute=0; minute <= 59; minute++){
     //    secondCounter=updateEvery+1;
-    ////  Serial.print("Minute ");
+    ////  Serial.print(F("Minute "));
     ////  Serial.println(minute);
 
     //if (digitalRead(WindProtectionSwitch)!=HIGH && (FirstIterationAfterArduinoReset==true)){
@@ -164,8 +164,8 @@ void loop()
         updateTime = updateEvery * 1000 + millis();
 
         if (joystickMode == false) {
-            Serial.println(" ");
-            Serial.print("Time: ");
+            Serial.println(F(" "));
+            Serial.print(F("Time: "));
             printtime(hour, minute, second, month, day, year, dayOfWeek);
         }
 
@@ -181,16 +181,16 @@ void loop()
                 SunsAzimuth = (SunsAzimuth - 180) * -1;
             }
 
-            //Serial.print("Sun's Azimuth Modified for Southern Hemisphere: ");
+            //Serial.print(F("Sun's Azimuth Modified for Southern Hemisphere: "));
             //Serial.println(SunsAzimuth);
         }
 
         if ((joystickMode == false)) {
-            Serial.print("Sun's Alt: ");
+            Serial.print(F("Sun's Alt: "));
             Serial.println(SunsAltitude, 3);
-            Serial.print("Sun's Az: ");
+            Serial.print(F("Sun's Az: "));
             Serial.println(SunsAzimuth, 3);
-            Serial.print("Number of Machines ");
+            Serial.print(F("Number of Machines "));
             Serial.println(numberOfMachines);
         }
     } //END Update Every X seconds
@@ -254,7 +254,7 @@ void loop()
         int iloop = 0;
         while (iloop < 2) {
             delay(1000);
-            Serial.println("Wind Protection Mode Enabled");
+            Serial.println(F("Wind Protection Mode Enabled"));
             iterationsAfterReset = 0;
             midCycle = 0;
             if (digitalRead(WindProtectionSwitch) == LOW) {

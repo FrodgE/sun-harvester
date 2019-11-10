@@ -130,20 +130,34 @@ void getDateDs1307(byte* second,
 
 void printtime(const int &hour, const int &minute, const int &second, const int &month, const int &dayOfMonth, const int &year, const int &dayOfWeek)
 {
-    const char *months[] = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
+    char buffer[4];
+    const static char jan[] PROGMEM = "Jan";
+    const static char feb[] PROGMEM = "Feb";
+    const static char mar[] PROGMEM = "Mar";
+    const static char apr[] PROGMEM = "Apr";
+    const static char may[] PROGMEM = "May";
+    const static char jun[] PROGMEM = "Jun";
+    const static char jul[] PROGMEM = "Jul";
+    const static char aug[] PROGMEM = "Aug";
+    const static char sep[] PROGMEM = "Sep";
+    const static char oct[] PROGMEM = "Oct";
+    const static char nov[] PROGMEM = "Nov";
+    const static char dec[] PROGMEM = "Dec";
+    const static char *const months[] PROGMEM = {jan, feb, mar, apr, may, jun, jul, aug, sep, oct, nov, dec};
 
     Serial.print(hour, DEC);
-    Serial.print(":");
+    Serial.print(F(":"));
     Serial.print(minute, DEC);
-    Serial.print(":");
+    Serial.print(F(":"));
     Serial.print(second, DEC);
-    Serial.print("  ");
+    Serial.print(F("  "));
 
     Serial.print(dayOfMonth, DEC);
-    Serial.print(" ");
-    Serial.print(months[month - 1]);
-    Serial.print(" ");
+    Serial.print(F(" "));
+    strcpy_P(buffer, (char *)pgm_read_word(&(months[month - 1]))); 
+    Serial.print(buffer);
+    Serial.print(F(" "));
     Serial.print(year, DEC);
-    Serial.print("  Day_of_week:");
+    Serial.print(F("  Day_of_week:"));
     Serial.println(dayOfWeek, DEC);
 }

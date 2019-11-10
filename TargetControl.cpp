@@ -43,7 +43,7 @@ void TargetControl(const int &second, const int &minute, const int &hour, const 
 
         //SAVES TARGET SETTINGS WHEN MANUAL CONTROL THROUGH EITHER THE SERIAL MONITOR OR THE JOYSTICK IS TURNED OFF
         if (justFinishedManualControl == true && digitalRead(manualModeOnOffPin) != HIGH) {
-            Serial.println("Writing to EPPROM");
+            Serial.println(F("Writing to EPPROM"));
             for (int i = 0; i <= numberOfMachines - 1; i++) {
                 eepromWriteFloat(i * 8 + 2 * 16 * targetsUsed - 1, MachineTargetAlt[i]);
                 eepromWriteFloat(i * 8 + 4 + 2 * 16 * targetsUsed - 1, MachineTargetAz[i]);
