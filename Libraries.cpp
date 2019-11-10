@@ -130,6 +130,8 @@ void getDateDs1307(byte* second,
 
 void printtime(const int &hour, const int &minute, const int &second, const int &month, const int &dayOfMonth, const int &year, const int &dayOfWeek)
 {
+    const char *months[] = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
+
     Serial.print(hour, DEC);
     Serial.print(":");
     Serial.print(minute, DEC);
@@ -137,13 +139,11 @@ void printtime(const int &hour, const int &minute, const int &second, const int 
     Serial.print(second, DEC);
     Serial.print("  ");
 
-    //if (GMT_YorN!=1){
-    Serial.print(month, DEC);
-    Serial.print("/");
     Serial.print(dayOfMonth, DEC);
-    Serial.print("/");
+    Serial.print(" ");
+    Serial.print(months[month - 1]);
+    Serial.print(" ");
     Serial.print(year, DEC);
     Serial.print("  Day_of_week:");
     Serial.println(dayOfWeek, DEC);
-    //}
 }
