@@ -99,21 +99,21 @@ const int minusOneButton = 12;
 
 //Open the "ReadMe" file that was downloaded with this program to see what each of these settings do.
 //Example Machine That uses Gear Reduction System for both AZIMUTH and ALTITUDE
-#define SETTING_0_GEAR_OR_LINEAR            0
-#define SETTING_1_SUN_TRACKER_OR_HELIOSTAT  2
+#define SETTING_0_GEAR_OR_LINEAR            ALT_GEAR_AZI_GEAR
+#define SETTING_1_SUN_TRACKER_OR_HELIOSTAT  HELIOSTAT
 #define SETTING_2_ALT_RATIO                 150
 #define SETTING_3_ALT_DIRECTION             -1
 #define SETTING_4_ALT_LINEAR_LENGTH_A       0
 #define SETTING_5_ALT_LINEAR_LENGTH_B       0
 #define SETTING_6_ALT_ANGLE_AT_ZERO         0
-#define SETTING_7_ALT_LINEAR_POS_AC_OB      0
+#define SETTING_7_ALT_LINEAR_POS_AC_OB      NOT_USED
 #define SETTING_8_ALT_HOME_SWITCH           -1
 #define SETTING_9_AZI_GEAR_RATIO            50
 #define SETTING_10_AZI_DIRECTION            -1
 #define SETTING_11_AZI_LINEAR_LENGTH_A      0
 #define SETTING_12_AZI_LINEAR_LENGTH_B      0
 #define SETTING_13_AZI_ANGLE_AT_ZERO        0
-#define SETTING_14_AZI_LINEAR_POS_AC_OB     0
+#define SETTING_14_AZI_LINEAR_POS_AC_OB     NOT_USED
 #define SETTING_15_AZI_HOME_SWITCH          -179
 #define SETTING_16_AZI_MINIMUM_ANGLE        -179
 #define SETTING_17_ALT_MINIMUM_ANGLE        -1
@@ -121,21 +121,21 @@ const int minusOneButton = 12;
 #define SETTING_19_ALT_MAXIMUM_ANGLE        110
 
 //Example Machine That uses Linear Actuator for both AZIMUTH and ALTITUDE
-//#define SETTING_0_GEAR_OR_LINEAR            1
-//#define SETTING_1_SUN_TRACKER_OR_HELIOSTAT  2
+//#define SETTING_0_GEAR_OR_LINEAR            ALT_LINEAR_AZI_LINEAR
+//#define SETTING_1_SUN_TRACKER_OR_HELIOSTAT  HELIOSTAT
 //#define SETTING_2_ALT_RATIO                 14
 //#define SETTING_3_ALT_DIRECTION             1
 //#define SETTING_4_ALT_LINEAR_LENGTH_A       8.21
 //#define SETTING_5_ALT_LINEAR_LENGTH_B       8.875
 //#define SETTING_6_ALT_ANGLE_AT_ZERO         78.41
-//#define SETTING_7_ALT_LINEAR_POS_AC_OB      1
+//#define SETTING_7_ALT_LINEAR_POS_AC_OB      ACUTE
 //#define SETTING_8_ALT_HOME_SWITCH           -1.5
 //#define SETTING_9_AZI_GEAR_RATIO            14
 //#define SETTING_10_AZI_DIRECTION            -1
 //#define SETTING_11_AZI_LINEAR_LENGTH_A      5.5
 //#define SETTING_12_AZI_LINEAR_LENGTH_B      5.5
 //#define SETTING_13_AZI_ANGLE_AT_ZERO        90
-//#define SETTING_14_AZI_LINEAR_POS_AC_OB     2
+//#define SETTING_14_AZI_LINEAR_POS_AC_OB     OBTUSE
 //#define SETTING_15_AZI_HOME_SWITCH          -58.839
 //#define SETTING_16_AZI_MINIMUM_ANGLE        -58.839
 //#define SETTING_17_ALT_MINIMUM_ANGLE        -1.5
@@ -143,21 +143,21 @@ const int minusOneButton = 12;
 //#define SETTING_19_ALT_MAXIMUM_ANGLE        66
 
 //Example Machine That uses Linear Actuator for ALTITUDE and Gear Reduction System for AZIMUTH
-//#define SETTING_0_GEAR_OR_LINEAR            2
-//#define SETTING_1_SUN_TRACKER_OR_HELIOSTAT  1
+//#define SETTING_0_GEAR_OR_LINEAR            ALT_LINEAR_AZI_GEAR
+//#define SETTING_1_SUN_TRACKER_OR_HELIOSTAT  SUN_TRACKER
 //#define SETTING_2_ALT_RATIO                 2
 //#define SETTING_3_ALT_DIRECTION             -1
 //#define SETTING_4_ALT_LINEAR_LENGTH_A       956
 //#define SETTING_5_ALT_LINEAR_LENGTH_B       1016
 //#define SETTING_6_ALT_ANGLE_AT_ZERO         90
-//#define SETTING_7_ALT_LINEAR_POS_AC_OB      1
+//#define SETTING_7_ALT_LINEAR_POS_AC_OB      ACUTE
 //#define SETTING_8_ALT_HOME_SWITCH           -1
 //#define SETTING_9_AZI_GEAR_RATIO            5067
 //#define SETTING_10_AZI_DIRECTION            -1
 //#define SETTING_11_AZI_LINEAR_LENGTH_A      0
 //#define SETTING_12_AZI_LINEAR_LENGTH_B      0
 //#define SETTING_13_AZI_ANGLE_AT_ZERO        0
-//#define SETTING_14_AZI_LINEAR_POS_AC_OB     0
+//#define SETTING_14_AZI_LINEAR_POS_AC_OB     NOT_USED
 //#define SETTING_15_AZI_HOME_SWITCH          -94
 //#define SETTING_16_AZI_MINIMUM_ANGLE        -94
 //#define SETTING_17_ALT_MINIMUM_ANGLE        -1
@@ -165,21 +165,21 @@ const int minusOneButton = 12;
 //#define SETTING_19_ALT_MAXIMUM_ANGLE        88
 
 //Example Machine That uses Linear Actuator for AZIMUTH and Gear Reduction System for ALTITUDE
-//#define SETTING_0_GEAR_OR_LINEAR            3
-//#define SETTING_1_SUN_TRACKER_OR_HELIOSTAT  1
+//#define SETTING_0_GEAR_OR_LINEAR            ALT_GEAR_AZI_LINEAR
+//#define SETTING_1_SUN_TRACKER_OR_HELIOSTAT  SUN_TRACKER
 //#define SETTING_2_ALT_RATIO                 36
 //#define SETTING_3_ALT_DIRECTION             1
 //#define SETTING_4_ALT_LINEAR_LENGTH_A       0
 //#define SETTING_5_ALT_LINEAR_LENGTH_B       0
 //#define SETTING_6_ALT_ANGLE_AT_ZERO         0
-//#define SETTING_7_ALT_LINEAR_POS_AC_OB      0
+//#define SETTING_7_ALT_LINEAR_POS_AC_OB      NOT_USED
 //#define SETTING_8_ALT_HOME_SWITCH           -1
 //#define SETTING_9_AZI_GEAR_RATIO            20
 //#define SETTING_10_AZI_DIRECTION            1
 //#define SETTING_11_AZI_LINEAR_LENGTH_A      16
 //#define SETTING_12_AZI_LINEAR_LENGTH_B      11
 //#define SETTING_13_AZI_ANGLE_AT_ZERO        90
-//#define SETTING_14_AZI_LINEAR_POS_AC_OB     1
+//#define SETTING_14_AZI_LINEAR_POS_AC_OB     ACUTE
 //#define SETTING_15_AZI_HOME_SWITCH          -60
 //#define SETTING_16_AZI_MINIMUM_ANGLE        -60
 //#define SETTING_17_ALT_MINIMUM_ANGLE        -1
