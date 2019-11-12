@@ -6,11 +6,19 @@
 #include <Arduino.h>
 
 
+// If using an Arduino Uno uncomment the line below
+//#define ARDUINO_UNO
+
 //Put how many machines you want to control here
 #define numberOfMachines 1
 
+#ifdef ARDUINO_UNO
+extern const float latitude;
+extern const float longitude;
+#else
 extern const char latitude[];
 extern const char longitude[];
+#endif
 extern const bool useNorthAsZero;
 extern const float timezone;
 extern const unsigned long updateEvery;

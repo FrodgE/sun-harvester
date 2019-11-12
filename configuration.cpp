@@ -3,9 +3,15 @@
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //PUT YOUR LATITUDE, LONGITUDE, AND TIME ZONE HERE
+#ifdef ARDUINO_UNO
+const float latitude = 39.19;
+const float longitude = -78.16;
+#else
 // Use strings so the "BigNumber" library can be used to avoid loss of precision
 const char latitude[] = "39.19";
 const char longitude[] = "-78.16";
+#endif
+
 const float timezone = -5;
 
 //If you live in the northern hemisphere, put false here. If you live in the southern hemisphere put true.

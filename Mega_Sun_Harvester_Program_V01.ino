@@ -9,13 +9,15 @@
 #include "Joystick_Control_Code.h"
 #include "Libraries.h"
 #include "MoveMachine.h"
-#include "SunCalculations.h"
 #include "TargetControl.h"
 #include "globals.h"
 
-#include <Wire.h>
+#ifndef ARDUINO_UNO
+#include "SunCalculations.h"
 #include <BigNumber.h>
+#endif
 
+#include <Wire.h>
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // User settings located in configuration.cpp
@@ -67,8 +69,10 @@ void setup()
     Wire.begin();
     Serial.begin(9600);
 
+#ifndef ARDUINO_UNO
     // Initialise "BigNumber" library and set precision
     BigNumber::begin(calculationScale);
+#endif
 
     ////////////////////////////////
     //TWO WIRE STEP/DIR DRIVER BOARD CODE
@@ -169,8 +173,11 @@ void loop()
             printtime(hour, minute, second, month, day, year, dayOfWeek);
         }
 
-        //SunPositionAlgo_LowAc::CalculateSunsPositionLowAc(month, day, hour, minute, second, timezone, latitude, longitude, SunsAltitude, SunsAzimuth, delta, h);
+#ifdef ARDUINO_UNO
+        CalculateSunsPositionLowAc(month, day, hour, minute, second, timezone, latitude, longitude, SunsAltitude, SunsAzimuth, delta, h);
+#else
         findSunsAltAndAzOne(year, month, day, timezone, hour, minute, second, latitude, longitude);
+#endif
         SunsAltitude = SunsAltitude + (1.02 / tan((SunsAltitude + 10.3 / (SunsAltitude + 5.11)) * PI / 180.0)) / 60.0; //Refraction Compensation: Meeus Pg. 105
 
         if (useNorthAsZero == true) {
