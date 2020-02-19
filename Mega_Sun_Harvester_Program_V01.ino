@@ -173,7 +173,7 @@ void loop()
             printtime(hour, minute, second, month, day, year, dayOfWeek);
         }
 
-#ifdef ARDUINO_UNO
+#ifdef ARDUINO_AVR_UNO
         CalculateSunsPositionLowAc(month, day, hour, minute, second, timezone, latitude, longitude, SunsAltitude, SunsAzimuth, delta, h);
 #else
         findSunsAltAndAzOne(year, month, day, timezone, hour, minute, second, latitude, longitude);

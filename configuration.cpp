@@ -3,7 +3,7 @@
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //PUT YOUR LATITUDE, LONGITUDE, AND TIME ZONE HERE
-#ifdef ARDUINO_UNO
+#ifdef ARDUINO_AVR_UNO
 const float latitude = 39.19;
 const float longitude = -78.16;
 #else
