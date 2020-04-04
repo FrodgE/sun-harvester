@@ -1,14 +1,6 @@
 // BigNumber test: calculate e
 #include "BigNumber.h"
 
-// function to display a big number and free it afterwards
-void printBignum (BigNumber & n)
-{
-  char * s = n.toString ();
-  Serial.println (s);
-  free (s);
-}  // end of printBignum
-
 void setup ()
 {
   Serial.begin (115200);
@@ -31,7 +23,7 @@ void setup ()
   }  while (e != E);
   unsigned long time = millis () - start;
 
-  printBignum (e);
+  Serial.println (e);
   Serial.print (time);
   Serial.println (" mS");
 } // end of setup

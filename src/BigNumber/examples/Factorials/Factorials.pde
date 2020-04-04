@@ -1,17 +1,11 @@
 // BigNumber test: factorials
 #include "BigNumber.h"
 
-// function to display a big number and free it afterwards
-void printBignum (BigNumber & n)
-{
-  char * s = n.toString ();
-  Serial.println (s);
-  free (s);
-}  // end of printBignum
-
 void setup ()
 {
   Serial.begin (115200);
+  while (!Serial) ;
+  delay(500);
   Serial.println ();
   BigNumber::begin ();  // initialize library
  
@@ -20,10 +14,10 @@ void setup ()
 
   for (int i = 2; i <= 200; i++)
   {
-    Serial.print (i);
-    Serial.print ("! = ");
+    Serial.print(i);
+    Serial.print("! = ");
     fact *= i;
-    printBignum (fact);
+    Serial.println(fact);
   }
 
 }  // end of setup

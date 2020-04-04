@@ -2,9 +2,11 @@
 //  BigNumber.cpp
 //  
 //  Author:  Nick Gammon
-//  Date:    7th January 2012.
-//  Version: 2.0
+//  Date:    22nd January 2013.
+//  Version: 3.1
 //  Released into the public domain.
+//  Added print function as suggested by Paul Stoffregen.
+//  Changed printTo to return the length, as required.
 
 #include "BigNumber.h"
 
@@ -92,6 +94,15 @@ BigNumber::operator long () const
 {
   return bc_num2long (num_);
 } // end of BigNumber::operator long
+
+// Allow Arduino's Serial.print() to print BigNumber objects!
+size_t BigNumber::printTo(Print& p) const
+{
+  char *buf = bc_num2str(num_);
+  size_t len = p.write(buf);
+  free(buf);
+  return len;
+}
 
 // add
 BigNumber & BigNumber::operator+= (const BigNumber & n)
@@ -222,4 +233,12 @@ BigNumber BigNumber::pow (const BigNumber power) const
 void BigNumber::divMod (const BigNumber divisor, BigNumber & quotient, BigNumber & remainder) const
 {
   bc_divmod (num_, divisor.num_, &quotient.num_, &remainder.num_, scale_);
+}
+
+// raise number by power, modulus modulus
+BigNumber BigNumber::powMod (const BigNumber power, const BigNumber & modulus) const
+{
+  BigNumber result;
+  bc_raisemod (num_, power.num_, modulus.num_, &result.num_, scale_);
+  return result;
 }

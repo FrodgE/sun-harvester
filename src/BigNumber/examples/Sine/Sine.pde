@@ -1,14 +1,6 @@
 // BigNumber test: calculate sines
 #include "BigNumber.h"
 
-// function to display a big number and free it afterwards
-void printBignum (BigNumber n)
-{
-  char * s = n.toString ();
-  Serial.println (s);
-  free (s);
-}  // end of printBignum
-
 // calculate sine of x with 'precision' iterations
 BigNumber sine (const BigNumber x, BigNumber precision)
 {
@@ -41,7 +33,7 @@ void setup ()
     Serial.print (") = ");
     BigNumber rad (deg);
     rad *= pi / BigNumber (180);  
-    printBignum (sine (rad, 30));  
+    Serial.println (sine (rad, 30));  
   }  // end of for loop
 
 } // end of setup

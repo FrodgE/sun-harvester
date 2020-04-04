@@ -3,21 +3,23 @@
 //  
 //
 //  Author:  Nick Gammon
-//  Date:    7th January 2012.
-//  Version: 2.0
+//  Date:    22nd January 2013.
+//  Version: 3.0
 //  Released into the public domain.
+//  Added print function as suggested by Paul Stoffregen.
 
 #ifndef _BigNumber_h
 #define _BigNumber_h
 
 #include <stddef.h>
+#include <Arduino.h>
 
 extern "C" 
 {
  #include "number.h" 
 }
 
-class BigNumber 
+class BigNumber : public Printable
 {
   
   // the current scaling amount - shared amongst all BigNumbers
@@ -46,6 +48,7 @@ public:
   // for outputting purposes ...
   char * toString () const;  // returns number as string, MUST FREE IT after use!
   operator long () const;
+  virtual size_t printTo(Print& p) const; // for Arduino Serial.print()
 
   // operators ... assignment
   BigNumber & operator= (const BigNumber & rhs);
@@ -103,6 +106,8 @@ public:
   BigNumber pow (const BigNumber power) const;
   // divide number by divisor, give quotient and remainder
   void divMod (const BigNumber divisor, BigNumber & quotient, BigNumber & remainder) const;
+  // raise number by power, modulus modulus
+  BigNumber powMod (const BigNumber power, const BigNumber & modulus) const;
   
 };  // end class declaration
 

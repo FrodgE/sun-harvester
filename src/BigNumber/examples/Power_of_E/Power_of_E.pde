@@ -1,14 +1,6 @@
 // BigNumber test: calculate power of E
 #include "BigNumber.h"
 
-// function to display a big number and free it afterwards
-void printBignum (BigNumber n)
-{
-  char * s = n.toString ();
-  Serial.println (s);
-  free (s);
-}  // end of printBignum
-
 BigNumber ePower (BigNumber x)
   {
    
@@ -41,9 +33,9 @@ void setup ()
   Serial.begin (115200);
   Serial.println ();
   Serial.println ();
-  BigNumber::begin (70);   // max around 70 on the Uno for a power of 5
+  BigNumber::begin (65);   // max around 65 on the Uno for a power of 5
 
-  printBignum (ePower (5));  // e  ^ 5
+  Serial.println (ePower (5));  // e  ^ 5
   
 } // end of setup
 

@@ -1,15 +1,6 @@
 // BigNumber test: powers
 #include "BigNumber.h"
 
-// function to display a big number and free it afterwards
-void printBignum (BigNumber & n)
-{
-  char * s = n.toString ();
-  Serial.println (s);
-  free (s);
-}  // end of printBignum
-
-
 void setup ()
 {
   Serial.begin (115200);
@@ -26,7 +17,7 @@ void setup ()
     Serial.print (i);
     Serial.print (" = ");
     BigNumber p = a.pow (i);
-    printBignum (p);
+    Serial.println (p);
   }  // end of for loop
 
   Serial.println ("--- powers of 3 ---");
@@ -39,7 +30,7 @@ void setup ()
     Serial.print (i);
     Serial.print (" = ");
     BigNumber p = a.pow (i);
-    printBignum (p);
+    Serial.println (p);
   }  // end of for loop
 
 }  // end of setup

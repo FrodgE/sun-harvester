@@ -1,14 +1,6 @@
 // BigNumber test: calculate natural logarithm
 #include "BigNumber.h"
 
-// function to display a big number and free it afterwards
-void printBignum (BigNumber n)
-{
-  char * s = n.toString ();
-  Serial.println (s);
-  free (s);
-}  // end of printBignum
-
 BigNumber one (1);
 BigNumber two (2);
 BigNumber half ("0.5");
@@ -49,7 +41,7 @@ void setup ()
   Serial.println ();
   BigNumber::begin (45);   // max around 45 on the Uno for ln (100)
 
-  printBignum (ln (100)); 
+  Serial.println (ln (100)); 
   
 } // end of setup
 
