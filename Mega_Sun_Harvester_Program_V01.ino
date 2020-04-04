@@ -14,7 +14,7 @@
 
 #ifndef ARDUINO_UNO
 #include "SunCalculations.h"
-#include <BigNumber.h>
+#include "src/BigNumber/BigNumber.h"
 #endif
 
 #include <Wire.h>

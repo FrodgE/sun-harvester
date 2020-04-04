@@ -9,7 +9,7 @@
 #define BigNumberMath_h
 
 #include <Arduino.h>
-#include <BigNumber.h>
+#include "../BigNumber/BigNumber.h"
 
 class BigNumberMath
 {

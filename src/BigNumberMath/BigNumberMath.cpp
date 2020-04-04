@@ -46,7 +46,7 @@
 // - make quick sign flips possible: x = -x (using bc_num x->n_sign)
 // - use instead number.c's _zero_, _one_, _two_ as constants
 
-#include <BigNumberMath.h>
+#include "BigNumberMath.h"
 
 BigNumber BigNumberMath::pi;
 BigNumber BigNumberMath::piOverOneEighty;

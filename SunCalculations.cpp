@@ -1,6 +1,6 @@
 #include "SunCalculations.h"
 #include "globals.h"
-#include <BigNumberMath.h>
+#include "src/BigNumberMath/BigNumberMath.h"
 
 BigNumber findjd(int year, int month, const int &day, const int &timezone, const int &hour, const int &minute, const int &second);
 BigNumber TimeInJulianCenturies(const BigNumber &jd);
