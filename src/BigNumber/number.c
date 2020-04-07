@@ -42,9 +42,9 @@
 #include <ctype.h>/* Prototypes needed for external utility routines. */
 
 /* Storage used for special numbers. */
-bc_num _zero_;
-bc_num _one_;
-bc_num _two_;
+bc_num _zero_ = NULL;
+bc_num _one_ = NULL;
+bc_num _two_ = NULL;
 
 /* new_num allocates a number and sets fields to known values. */
 
@@ -90,6 +90,8 @@ bc_free_num (num)
 void
 bc_init_numbers ()
 {
+  if (_zero_ != NULL)
+    return;
   _zero_ = bc_new_num (1,0);
   _one_  = bc_new_num (1,0);
   _one_->n_value[0] = 1;
@@ -115,6 +117,8 @@ void
 bc_init_num (num)
      bc_num *num;
 {
+  if (_zero_ == NULL)
+    bc_init_numbers();
   *num = bc_copy_num (_zero_);
 }
 
