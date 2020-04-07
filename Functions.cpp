@@ -71,6 +71,12 @@ void moveMotorWithAccel(const long &numOfSteps, const int &stepPin, const int &D
             if ((doSteps > (abs(numOfSteps) - numberOfStepsToReachMinFromMax))) {
                 motorDelay = motorDelay + motorDelayAdjust;
             } //Deccelerates the motor after it gets close to the end of its move
+#ifdef ARDUINO_ARCH_ESP8266
+            // This loop can take a long time and trigger the software watchdog.  "Feed" the dog to prevent the trigger.
+            ESP.wdtFeed();
+            // Calling "yield()" would be preferred but that can take ~2ms which would affect motor movement
+            // yield();
+#endif
         }
     } else { //This code runs if the acceleration slope is an upside down V.
         for (long doSteps = 1; doSteps <= abs(numOfSteps); doSteps++) {
@@ -90,6 +96,12 @@ void moveMotorWithAccel(const long &numOfSteps, const int &stepPin, const int &D
             if (motorDelay > maxMotorDelay) {
                 motorDelay = maxMotorDelay;
             }
+#ifdef ARDUINO_ARCH_ESP8266
+            // This loop can take a long time and trigger the software watchdog.  "Feed" the dog to prevent the trigger.
+            ESP.wdtFeed();
+            // Calling "yield()" would be preferred but that can take ~2ms which would affect motor movement
+            // yield();
+#endif
         }
     }
 }
@@ -146,6 +158,13 @@ void searchForLimit(const float &limitAngle, const int &DirPin, const int &stepP
                 x = maxResetSteps;
             }
             x += 1;
+
+#ifdef ARDUINO_ARCH_ESP8266
+            // This loop can take a long time and trigger the software watchdog.  "Feed" the dog to prevent the trigger.
+            ESP.wdtFeed();
+            // Calling "yield()" would be preferred but that can take ~2ms which would affect motor movement
+            // yield();
+#endif
         }
     }
 }

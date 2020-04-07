@@ -67,7 +67,7 @@ float MachinesPrevAz[numberOfMachines] = {};
 void setup()
 {
     Wire.begin();
-    Serial.begin(9600);
+    Serial.begin(115200);
 
 #ifndef ARDUINO_UNO
     // Initialise "BigNumber" library and set precision

@@ -154,8 +154,20 @@ void printtime(const int &hour, const int &minute, const int &second, const int 
 
     Serial.print(dayOfMonth, DEC);
     Serial.print(F(" "));
-    strcpy_P(buffer, (char *)pgm_read_word(&(months[month - 1]))); 
-    Serial.print(buffer);
+    if ((month >= 0) && (month < 12)) {
+#ifdef ARDUINO_ARCH_AVR
+        strncpy_P(buffer, (char *)pgm_read_word(&(months[month - 1])), sizeof(buffer));
+#else
+        // Compatibility macro for pgm_read_word on ESP32 truncates the address
+        strncpy(buffer, months[month - 1], sizeof(buffer));
+#endif
+        Serial.print(buffer);
+    }
+    else {
+        // *SHOULD* never happen, but if it _did_ the array would be out of bounds and that wouldn't end well
+        Serial.print(F("Month="));
+        Serial.print(month);
+    }
     Serial.print(F(" "));
     Serial.print(year, DEC);
     Serial.print(F("  Day_of_week:"));
