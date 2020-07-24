@@ -2,6 +2,10 @@
 #include "Functions.h"
 #include "globals.h"
 
+#ifndef ARDUINO_ARCH_AVR
+#include <EEPROM.h>
+#endif
+
 
 void TargetControl(const int &second, const int &minute, const int &hour, const int &day, const int &month, const int &year, const int &dayOfWeek)
 {
@@ -48,6 +52,9 @@ void TargetControl(const int &second, const int &minute, const int &hour, const 
                 eepromWriteFloat(i * 8 + 2 * 16 * targetsUsed - 1, MachineTargetAlt[i]);
                 eepromWriteFloat(i * 8 + 4 + 2 * 16 * targetsUsed - 1, MachineTargetAz[i]);
             }
+#ifndef ARDUINO_ARCH_AVR
+            EEPROM.commit();
+#endif
             justFinishedManualControl = false;
         }
 

@@ -17,6 +17,11 @@
 #include "src/BigNumber/BigNumber.h"
 #endif
 
+#ifndef ARDUINO_ARCH_AVR
+#define EEPROM_SIZE 512
+#include <EEPROM.h>
+#endif
+
 #include <Wire.h>
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -72,6 +77,10 @@ void setup()
 #ifndef ARDUINO_UNO
     // Initialise "BigNumber" library and set precision
     BigNumber::begin(calculationScale);
+#endif
+
+#ifndef ARDUINO_ARCH_AVR
+    EEPROM.begin(EEPROM_SIZE);
 #endif
 
     ////////////////////////////////
